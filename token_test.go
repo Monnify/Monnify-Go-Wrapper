@@ -22,9 +22,9 @@ func TestValidToken(t *testing.T) {
 
 	// Get uncached token
 	getToken, _ := token.GetToken()
-	assert.Equal(t, true, getToken != "", "Token is valid")
+	assert.Equal(t, true, getToken != "", "expected 'true' but got "+getToken != "")
 
 	// Get cached token
 	getTokenCached, _ := token.GetToken()
-	assert.Equal(t, true, getTokenCached != "", "Token is valid")
+	assert.Equal(t, true, getTokenCached != "", "expected 'true' but got "+getTokenCached != "")
 }
