@@ -1,21 +1,23 @@
-package monnify
+package token
 
 import (
 	"log"
 	"os"
 	"testing"
 
+	"github.com/Monnify/Monnify-Go-Wrapper/src/common/cache"
+	"github.com/Monnify/Monnify-Go-Wrapper/src/common/utils"
 	"github.com/joho/godotenv"
 	"github.com/stretchr/testify/assert"
 )
 
 func TestValidToken(t *testing.T) {
-	if err := godotenv.Load(); err != nil {
+	if err := godotenv.Load("../../../.env"); err != nil {
 		log.Fatal("Error loading .env file")
 	}
 
-	cache := NewCache()
-	baseUrl := GetBaseUrl(false)
+	cache := cache.NewCache()
+	baseUrl := utils.GetBaseUrl(false)
 	apiKey := os.Getenv("MONNIFY_API_KEY")
 	secretKey := os.Getenv("MONNIFY_SECRET_KEY")
 	token := NewToken(cache, baseUrl, apiKey+":"+secretKey)

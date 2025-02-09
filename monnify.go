@@ -1,5 +1,11 @@
 package monnify
 
+import (
+	"github.com/Monnify/Monnify-Go-Wrapper/src/common/cache"
+	"github.com/Monnify/Monnify-Go-Wrapper/src/common/token"
+	"github.com/Monnify/Monnify-Go-Wrapper/src/common/utils"
+)
+
 type MonnifyOptions struct {
 	ApiKey       string
 	SecretKey    string
@@ -7,9 +13,9 @@ type MonnifyOptions struct {
 }
 
 func New(options *MonnifyOptions) string {
-	baseUrl := GetBaseUrl(options.IsProduction)
-	cache := NewCache()
-	_ = NewToken(cache, baseUrl, options.ApiKey+":"+options.SecretKey)
+	baseUrl := utils.GetBaseUrl(options.IsProduction)
+	cache := cache.NewCache()
+	_ = token.NewToken(cache, baseUrl, options.ApiKey+":"+options.SecretKey)
 
 	return "Hello"
 }

@@ -1,4 +1,4 @@
-package monnify
+package utils
 
 func GetBaseUrl(isProduction bool) string {
 	if isProduction {

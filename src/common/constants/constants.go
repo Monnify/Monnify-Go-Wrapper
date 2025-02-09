@@ -1,4 +1,4 @@
-package monnify
+package constants
 
 const (
 	LoginEndpoint = "/api/v1/auth/login"
