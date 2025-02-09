@@ -1,7 +1,15 @@
 package monnify
 
-import "fmt"
+type MonnifyOptions struct {
+	ApiKey       string
+	SecretKey    string
+	IsProduction bool
+}
 
-func New() {
-	fmt.Println("Monnify")
+func New(options *MonnifyOptions) string {
+	baseUrl := GetBaseUrl(options.IsProduction)
+	cache := NewCache()
+	_ = NewToken(cache, baseUrl, options.ApiKey+":"+options.SecretKey)
+
+	return "Hello"
 }
