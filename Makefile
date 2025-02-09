@@ -7,7 +7,16 @@ build: ## Build project
 	go build -o ./bin/monnify ./monnify
 
 test: ## Launch tests
-	go test ./...
+	go test -v ./...
+
+test-coverage: ## Launch tests
+	go test -cover ./...
+
+test-coverage-report: ## Launch tests
+	go test -coverprofile=coverage.out ./... 
+
+view-coverage-report: ## Launch tests
+	go tool cover -html=coverage.out
 
 bump: ## Update packages version
 	go get -u ./...
