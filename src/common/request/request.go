@@ -1,4 +1,4 @@
-package monnify
+package request
 
 import (
 	"errors"
