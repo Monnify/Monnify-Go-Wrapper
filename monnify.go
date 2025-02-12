@@ -18,13 +18,13 @@ type Monnify struct {
 	Disbursement *disbursement.Disbursement
 }
 
-func New(options *MonnifyOptions) Monnify {
+func New(options *MonnifyOptions) *Monnify {
 	baseUrl := utils.GetBaseUrl(options.IsProduction)
 	cache := cache.NewCache()
 	request := request.NewHttpRequest(baseUrl)
 	token := token.NewToken(cache, baseUrl, options.ApiKey+":"+options.SecretKey)
 
-	return Monnify{
+	return &Monnify{
 		Disbursement: disbursement.NewDisbursement(request, token),
 	}
 }
