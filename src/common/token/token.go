@@ -59,8 +59,13 @@ func (t *Token) GenerateToken() (string, error) {
 func (t *Token) GetToken() (string, error) {
 	value, ok := t.cache.Get(constants.AuthentionKey)
 	if ok {
-		return value, nil
+		return "Bearer " + value, nil
 	}
 
-	return t.GenerateToken()
+	token, err := t.GenerateToken()
+	if err != nil {
+		return "", err
+	}
+
+	return "Bearer " + token, nil
 }
