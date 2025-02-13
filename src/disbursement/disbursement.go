@@ -3,17 +3,15 @@ package disbursement
 import (
 	"github.com/Monnify/Monnify-Go-Wrapper/src/common/constants"
 	"github.com/Monnify/Monnify-Go-Wrapper/src/common/request"
-	"github.com/Monnify/Monnify-Go-Wrapper/src/common/token"
 	"github.com/Monnify/Monnify-Go-Wrapper/src/common/utils"
 )
 
 type Disbursement struct {
 	request *request.HttpRequest
-	token   *token.Token
 }
 
-func NewDisbursement(request *request.HttpRequest, token *token.Token) *Disbursement {
-	return &Disbursement{request, token}
+func NewDisbursement(request *request.HttpRequest) *Disbursement {
+	return &Disbursement{request}
 }
 
 func (d *Disbursement) InitiateSingleTransfer(body SingleTransfer) (*SingleTransferResponse, error) {
@@ -21,12 +19,7 @@ func (d *Disbursement) InitiateSingleTransfer(body SingleTransfer) (*SingleTrans
 		return nil, err
 	}
 
-	token, err := d.token.GetToken()
-	if err != nil {
-		return nil, err
-	}
-
-	res, err := d.request.Post(constants.DisbursementSingleEndpoint, token, body)
+	res, err := d.request.Post(constants.DisbursementSingleEndpoint, body)
 	if err != nil {
 		return nil, err
 	}
