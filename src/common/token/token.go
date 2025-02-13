@@ -1,4 +1,4 @@
-package monnify
+package token
 
 import (
 	"encoding/base64"
@@ -6,12 +6,16 @@ import (
 	"errors"
 	"io"
 	"time"
+
+	"github.com/Monnify/Monnify-Go-Wrapper/src/common/cache"
+	"github.com/Monnify/Monnify-Go-Wrapper/src/common/constants"
+	"github.com/Monnify/Monnify-Go-Wrapper/src/common/request"
 )
 
 type Token struct {
-	cache       *Cache
+	cache       *cache.Cache
 	credentials string
-	request     *HttpRequest
+	request     *request.HttpRequest
 }
 
 type Login struct {
@@ -24,13 +28,13 @@ type Login struct {
 	} `json:"responseBody"`
 }
 
-func NewToken(cache *Cache, baseUrl, credentials string) *Token {
-	return &Token{cache: cache, credentials: credentials, request: NewHttpRequest(baseUrl)}
+func NewToken(cache *cache.Cache, baseUrl, credentials string) *Token {
+	return &Token{cache: cache, credentials: credentials, request: request.NewHttpRequest(baseUrl)}
 }
 
 func (t *Token) GenerateToken() (string, error) {
 	base64Str := base64.StdEncoding.EncodeToString([]byte(t.credentials))
-	res, err := t.request.Post(LoginEndpoint, "Basic "+base64Str, nil)
+	res, err := t.request.Post(constants.LoginEndpoint, "Basic "+base64Str, nil)
 	if err != nil {
 		return "", err
 	}
@@ -48,15 +52,20 @@ func (t *Token) GenerateToken() (string, error) {
 		return "", errors.New("failed to unmarshal response body")
 	}
 
-	t.cache.Set(AuthentionKey, data.ResponseBody.AccessToken, data.ResponseBody.ExpiresIn*time.Second)
+	t.cache.Set(constants.AuthentionKey, data.ResponseBody.AccessToken, data.ResponseBody.ExpiresIn*time.Second)
 	return data.ResponseBody.AccessToken, nil
 }
 
 func (t *Token) GetToken() (string, error) {
-	value, ok := t.cache.Get(AuthentionKey)
+	value, ok := t.cache.Get(constants.AuthentionKey)
 	if ok {
-		return value, nil
+		return "Bearer " + value, nil
 	}
 
-	return t.GenerateToken()
+	token, err := t.GenerateToken()
+	if err != nil {
+		return "", err
+	}
+
+	return "Bearer " + token, nil
 }

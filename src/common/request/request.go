@@ -1,10 +1,12 @@
-package monnify
+package request
 
 import (
 	"errors"
 	"io"
 	"net/http"
 	"time"
+
+	"github.com/Monnify/Monnify-Go-Wrapper/src/common/utils"
 )
 
 type HttpRequest struct {
@@ -24,8 +26,13 @@ func (h *HttpRequest) CreateRequest(method, url string, body io.Reader) (*http.R
 	return req, nil
 }
 
-func (h *HttpRequest) Post(url, authorization string, body io.Reader) (*http.Response, error) {
-	req, err := h.CreateRequest(http.MethodPost, h.baseUrl+url, body)
+func (h *HttpRequest) Post(url, authorization string, body any) (*http.Response, error) {
+	parsedBody, err := utils.ParseBody(body)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := h.CreateRequest(http.MethodPost, h.baseUrl+url, parsedBody)
 	if err != nil {
 		return nil, err
 	}
