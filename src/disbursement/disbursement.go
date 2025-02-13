@@ -19,8 +19,6 @@ func (d *Disbursement) InitiateSingleTransfer(body SingleTransfer) (*SingleTrans
 		return nil, err
 	}
 
-	body.SetDefault()
-
 	res, err := d.request.Post(constants.DisbursementSingleEndpoint, body)
 	if err != nil {
 		return nil, err
@@ -29,28 +27,6 @@ func (d *Disbursement) InitiateSingleTransfer(body SingleTransfer) (*SingleTrans
 	defer res.Body.Close()
 
 	resBody, err := utils.ParseResponse[SingleTransferResponse](res.Body)
-	if err != nil {
-		return nil, err
-	}
-
-	return resBody, nil
-}
-
-func (d *Disbursement) InitiateBulkTransfer(body BulkTransfer) (*BulkTransferResponse, error) {
-	if err := utils.ValidateStruct(body); err != nil {
-		return nil, err
-	}
-
-	body.SetDefault()
-
-	res, err := d.request.Post(constants.BulkTransferEndpoint, body)
-	if err != nil {
-		return nil, err
-	}
-
-	defer res.Body.Close()
-
-	resBody, err := utils.ParseResponse[BulkTransferResponse](res.Body)
 	if err != nil {
 		return nil, err
 	}
