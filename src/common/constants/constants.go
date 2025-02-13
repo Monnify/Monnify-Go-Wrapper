@@ -10,5 +10,5 @@ const (
 
 var (
 	SupportedCurrency = []string{"NGN"}
-	ValidationEnum    = []string{"BREAK", "CONTINUE"}
+	OnValidationEnum  = []string{"BREAK", "CONTINUE"}
 )

@@ -45,7 +45,7 @@ type bulkTransferTransactionList struct {
 type BulkTransfer struct {
 	Title                string                        `validate:"required,min=5" json:"title"`
 	BatchReference       string                        `validate:"required" json:"batchReference"`
-	OnValidationFailure  string                        `validate:"validationEnum" json:"onValidationFailure"`
+	OnValidationFailure  string                        `validate:"onValidationEnum" json:"onValidationFailure"`
 	NotificationInterval int                           `validate:"number,min=10" json:"notificationInterval"`
 	Narration            string                        `validate:"required,min=3" json:"narration"`
 	SourceAccountNumber  string                        `validate:"number,len=10" json:"sourceAccountNumber"`
