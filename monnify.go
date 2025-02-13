@@ -1,9 +1,7 @@
 package monnify
 
 import (
-	"github.com/Monnify/Monnify-Go-Wrapper/src/common/cache"
 	"github.com/Monnify/Monnify-Go-Wrapper/src/common/request"
-	"github.com/Monnify/Monnify-Go-Wrapper/src/common/token"
 	"github.com/Monnify/Monnify-Go-Wrapper/src/common/utils"
 	"github.com/Monnify/Monnify-Go-Wrapper/src/disbursement"
 )
@@ -20,11 +18,9 @@ type Monnify struct {
 
 func New(options *MonnifyOptions) *Monnify {
 	baseUrl := utils.GetBaseUrl(options.IsProduction)
-	cache := cache.NewCache()
-	request := request.NewHttpRequest(baseUrl)
-	token := token.NewToken(cache, baseUrl, options.ApiKey+":"+options.SecretKey)
+	request := request.NewHttpRequest(baseUrl, options.ApiKey+":"+options.SecretKey)
 
 	return &Monnify{
-		Disbursement: disbursement.NewDisbursement(request, token),
+		Disbursement: disbursement.NewDisbursement(request),
 	}
 }
