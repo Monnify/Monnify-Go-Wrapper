@@ -135,25 +135,36 @@ type GetStatus struct {
 	Reference string `validate:"required" json:"reference"`
 }
 
+type TransferStatus struct {
+	Amount                   int    `json:"amount"`
+	Reference                string `json:"reference"`
+	Narration                string `json:"narration"`
+	Currency                 string `json:"currency"`
+	Fee                      int    `json:"fee"`
+	TwoFaEnabled             bool   `json:"twoFaEnabled"`
+	Status                   string `json:"status"`
+	TransactionDescription   string `json:"transactionDescription"`
+	TransactionReference     string `json:"transactionReference"`
+	CreatedOn                string `json:"createdOn"`
+	SourceAccountNumber      string `json:"sourceAccountNumber"`
+	DestinationAccountName   string `json:"destinationAccountName"`
+	DestinationBankName      string `json:"destinationBankName"`
+	DestinationAccountNumber string `json:"destinationAccountNumber"`
+	DestinationBankCode      string `json:"destinationBankCode"`
+}
+
 type GetSingleTransferStatusResponse struct {
+	RequestSuccessful bool           `json:"requestSuccessful"`
+	ResponseMessage   string         `json:"responseMessage"`
+	ResponseCode      string         `json:"responseCode"`
+	ResponseBody      TransferStatus `json:"responseBody"`
+}
+
+type GetBulkTransferStatusResponse struct {
 	RequestSuccessful bool   `json:"requestSuccessful"`
 	ResponseMessage   string `json:"responseMessage"`
 	ResponseCode      string `json:"responseCode"`
 	ResponseBody      struct {
-		Amount                   int    `json:"amount"`
-		Reference                string `json:"reference"`
-		Narration                string `json:"narration"`
-		Currency                 string `json:"currency"`
-		Fee                      int    `json:"fee"`
-		TwoFaEnabled             bool   `json:"twoFaEnabled"`
-		Status                   string `json:"status"`
-		TransactionDescription   string `json:"transactionDescription"`
-		TransactionReference     string `json:"transactionReference"`
-		CreatedOn                string `json:"createdOn"`
-		SourceAccountNumber      string `json:"sourceAccountNumber"`
-		DestinationAccountName   string `json:"destinationAccountName"`
-		DestinationBankName      string `json:"destinationBankName"`
-		DestinationAccountNumber string `json:"destinationAccountNumber"`
-		DestinationBankCode      string `json:"destinationBankCode"`
+		Content []TransferStatus `json:"content"`
 	} `json:"responseBody"`
 }
