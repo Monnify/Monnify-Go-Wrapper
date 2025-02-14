@@ -1,6 +1,9 @@
 package disbursement
 
 import (
+	"fmt"
+	"net/url"
+
 	"github.com/Monnify/Monnify-Go-Wrapper/src/common/constants"
 	"github.com/Monnify/Monnify-Go-Wrapper/src/common/request"
 	"github.com/Monnify/Monnify-Go-Wrapper/src/common/utils"
@@ -111,6 +114,28 @@ func (d *Disbursement) ResendTransferOTP(body ResendTransferOTP) (*ResendTransfe
 	defer res.Body.Close()
 
 	resBody, err := utils.ParseResponse[ResendTransferOTPResponse](res.Body)
+	if err != nil {
+		return nil, err
+	}
+
+	return resBody, nil
+}
+
+func (d *Disbursement) GetSingleTransferStatus(body GetStatus) (*GetSingleTransferStatusResponse, error) {
+	if err := utils.ValidateStruct(body); err != nil {
+		return nil, err
+	}
+
+	encodedReference := url.QueryEscape(body.Reference)
+	newUrl := fmt.Sprintf(constants.GetSingleTransferStatusEndpoint, encodedReference)
+	res, err := d.request.Get(newUrl)
+	if err != nil {
+		return nil, err
+	}
+
+	defer res.Body.Close()
+
+	resBody, err := utils.ParseResponse[GetSingleTransferStatusResponse](res.Body)
 	if err != nil {
 		return nil, err
 	}
