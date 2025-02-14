@@ -9,6 +9,7 @@ const (
 	ResendTransferOTPEndpoint       = "/api/v2/disbursements/single/resend-otp"
 	GetSingleTransferStatusEndpoint = "/api/v2/disbursements/single/summary?reference=%s"
 	GetBulkTransferStatusEndpoint   = "/api/v2/disbursements/bulk/%s/transactions"
+	AllSingleTransferEndpoint       = "/api/v2/disbursements/single/transactions?pageSize=%d&pageNo=%d"
 
 	AuthentionKey = "authentication"
 )
