@@ -97,3 +97,23 @@ func (d *Disbursement) AuthorizeSingleTransfer(body AuthorizeTransfer) (*Authori
 
 	return resBody, nil
 }
+
+func (d *Disbursement) ResendTransferOTP(body ResendTransferOTP) (*ResendTransferOTPResponse, error) {
+	if err := utils.ValidateStruct(body); err != nil {
+		return nil, err
+	}
+
+	res, err := d.request.Post(constants.ResendTransferOTPEndpoint, body)
+	if err != nil {
+		return nil, err
+	}
+
+	defer res.Body.Close()
+
+	resBody, err := utils.ParseResponse[ResendTransferOTPResponse](res.Body)
+	if err != nil {
+		return nil, err
+	}
+
+	return resBody, nil
+}
