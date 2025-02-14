@@ -87,7 +87,7 @@ type AuthorizeTransfer struct {
 	AuthorizationCode string `validate:"required,number" json:"authorizationCode"`
 }
 
-type AuthorizeTransferResponse struct {
+type AuthorizeBulkTransferResponse struct {
 	RequestSuccessful bool   `json:"requestSuccessful"`
 	ResponseMessage   string `json:"responseMessage"`
 	ResponseCode      string `json:"responseCode"`
@@ -98,5 +98,22 @@ type AuthorizeTransferResponse struct {
 		BatchStatus            string `json:"batchStatus"`
 		TotalTransactionsCount int    `json:"totalTransactionsCount"`
 		DateCreated            string `json:"dateCreated"`
+	} `json:"responseBody"`
+}
+
+type AuthorizeSingleTransferResponse struct {
+	RequestSuccessful bool   `json:"requestSuccessful"`
+	ResponseMessage   string `json:"responseMessage"`
+	ResponseCode      string `json:"responseCode"`
+	ResponseBody      struct {
+		Amount                   int    `json:"amount"`
+		Reference                string `json:"reference"`
+		Status                   string `json:"status"`
+		DateCreated              string `json:"dateCreated"`
+		TotalFee                 int    `json:"totalFee"`
+		DestinationAccountName   string `json:"destinationAccountName"`
+		DestinationBankName      string `json:"destinationBankName"`
+		DestinationAccountNumber string `json:"destinationAccountNumber"`
+		DestinationBankCode      string `json:"destinationBankCode"`
 	} `json:"responseBody"`
 }

@@ -58,7 +58,7 @@ func (d *Disbursement) InitiateBulkTransfer(body BulkTransfer) (*BulkTransferRes
 	return resBody, nil
 }
 
-func (d *Disbursement) AuthorizeBulkTransfer(body AuthorizeTransfer) (*AuthorizeTransferResponse, error) {
+func (d *Disbursement) AuthorizeBulkTransfer(body AuthorizeTransfer) (*AuthorizeBulkTransferResponse, error) {
 	if err := utils.ValidateStruct(body); err != nil {
 		return nil, err
 	}
@@ -70,7 +70,27 @@ func (d *Disbursement) AuthorizeBulkTransfer(body AuthorizeTransfer) (*Authorize
 
 	defer res.Body.Close()
 
-	resBody, err := utils.ParseResponse[AuthorizeTransferResponse](res.Body)
+	resBody, err := utils.ParseResponse[AuthorizeBulkTransferResponse](res.Body)
+	if err != nil {
+		return nil, err
+	}
+
+	return resBody, nil
+}
+
+func (d *Disbursement) AuthorizeSingleTransfer(body AuthorizeTransfer) (*AuthorizeSingleTransferResponse, error) {
+	if err := utils.ValidateStruct(body); err != nil {
+		return nil, err
+	}
+
+	res, err := d.request.Post(constants.AuthorizeSingleTransferEndpoint, body)
+	if err != nil {
+		return nil, err
+	}
+
+	defer res.Body.Close()
+
+	resBody, err := utils.ParseResponse[AuthorizeSingleTransferResponse](res.Body)
 	if err != nil {
 		return nil, err
 	}
