@@ -142,3 +142,24 @@ func (d *Disbursement) GetSingleTransferStatus(body GetStatus) (*GetSingleTransf
 
 	return resBody, nil
 }
+
+func (d *Disbursement) GetBulkTransferStatus(body GetStatus) (*GetBulkTransferStatusResponse, error) {
+	if err := utils.ValidateStruct(body); err != nil {
+		return nil, err
+	}
+
+	newUrl := fmt.Sprintf(constants.GetBulkTransferStatusEndpoint, body.Reference)
+	res, err := d.request.Get(newUrl)
+	if err != nil {
+		return nil, err
+	}
+
+	defer res.Body.Close()
+
+	resBody, err := utils.ParseResponse[GetBulkTransferStatusResponse](res.Body)
+	if err != nil {
+		return nil, err
+	}
+
+	return resBody, nil
+}

@@ -63,7 +63,7 @@ func ParseBody(body any) (*bytes.Reader, error) {
 	return reader, nil
 }
 
-func ParseResponse[G comparable](body io.ReadCloser) (*G, error) {
+func ParseResponse[G any](body io.ReadCloser) (*G, error) {
 	resBody, err := io.ReadAll(body)
 	if err != nil {
 		return nil, errors.New("failed to read response body")
