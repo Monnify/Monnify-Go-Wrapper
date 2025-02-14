@@ -153,6 +153,19 @@ type TransferStatus struct {
 	DestinationBankCode      string `json:"destinationBankCode"`
 }
 
+type Pageable struct {
+	Sort struct {
+		Sorted   bool `json:"sorted"`
+		Unsorted bool `json:"unsorted"`
+		Empty    bool `json:"empty"`
+	} `json:"sort"`
+	PageSize   int  `json:"pageSize"`
+	PageNumber int  `json:"pageNumber"`
+	Offset     int  `json:"offset"`
+	Paged      bool `json:"paged"`
+	Unpaged    bool `json:"unpaged"`
+}
+
 type GetSingleTransferStatusResponse struct {
 	RequestSuccessful bool           `json:"requestSuccessful"`
 	ResponseMessage   string         `json:"responseMessage"`
@@ -165,6 +178,49 @@ type GetBulkTransferStatusResponse struct {
 	ResponseMessage   string `json:"responseMessage"`
 	ResponseCode      string `json:"responseCode"`
 	ResponseBody      struct {
-		Content []TransferStatus `json:"content"`
+		Content       []TransferStatus `json:"content"`
+		Pageable      Pageable         `json:"pageable"`
+		Last          bool             `json:"last"`
+		TotalPages    int              `json:"totalPages"`
+		TotalElements int              `json:"totalElements"`
+		Sort          struct {
+			Sorted   bool `json:"sorted"`
+			Unsorted bool `json:"unsorted"`
+			Empty    bool `json:"empty"`
+		} `json:"sort"`
+		First            bool `json:"first"`
+		NumberOfElements int  `json:"numberOfElements"`
+		Size             int  `json:"size"`
+		Number           int  `json:"number"`
+		Empty            bool `json:"empty"`
+	} `json:"responseBody"`
+}
+
+type GetAllSingleTransfer struct {
+	Reference string `validate:"required" json:"reference"`
+	PageNo    int    `validate:"required,number,min=0" json:"pageNo"`
+	PageSize  int    `validate:"required,number,min=1" json:"pageSize"`
+}
+
+type GetAllSingleTransferResponse struct {
+	RequestSuccessful bool   `json:"requestSuccessful"`
+	ResponseMessage   string `json:"responseMessage"`
+	ResponseCode      string `json:"responseCode"`
+	ResponseBody      struct {
+		Content       []TransferStatus `json:"content"`
+		Pageable      Pageable         `json:"pageable"`
+		Last          bool             `json:"last"`
+		TotalPages    int              `json:"totalPages"`
+		TotalElements int              `json:"totalElements"`
+		Sort          struct {
+			Sorted   bool `json:"sorted"`
+			Unsorted bool `json:"unsorted"`
+			Empty    bool `json:"empty"`
+		} `json:"sort"`
+		First            bool `json:"first"`
+		NumberOfElements int  `json:"numberOfElements"`
+		Size             int  `json:"size"`
+		Number           int  `json:"number"`
+		Empty            bool `json:"empty"`
 	} `json:"responseBody"`
 }
