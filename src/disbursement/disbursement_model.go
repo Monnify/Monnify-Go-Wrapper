@@ -81,3 +81,22 @@ type BulkTransferResponse struct {
 		DateCreated            string `json:"dateCreated"`
 	} `json:"responseBody"`
 }
+
+type AuthorizeTransfer struct {
+	Reference         string `validate:"required" json:"reference"`
+	AuthorizationCode string `validate:"required,number" json:"authorizationCode"`
+}
+
+type AuthorizeTransferResponse struct {
+	RequestSuccessful bool   `json:"requestSuccessful"`
+	ResponseMessage   string `json:"responseMessage"`
+	ResponseCode      string `json:"responseCode"`
+	ResponseBody      struct {
+		TotalAmount            int    `json:"totalAmount"`
+		TotalFee               int    `json:"totalFee"`
+		BatchReference         string `json:"batchReference"`
+		BatchStatus            string `json:"batchStatus"`
+		TotalTransactionsCount int    `json:"totalTransactionsCount"`
+		DateCreated            string `json:"dateCreated"`
+	} `json:"responseBody"`
+}
