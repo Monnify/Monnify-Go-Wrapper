@@ -32,10 +32,24 @@ func validateCurrency(fl validator.FieldLevel) bool {
 	return true
 }
 
+func onValidationEnum(fl validator.FieldLevel) bool {
+	field, ok := fl.Field().Interface().(string)
+	if !ok {
+		return false
+	}
+
+	if !slices.Contains(constants.OnValidationEnum, field) {
+		return false
+	}
+
+	return true
+}
+
 func ValidateStruct(data any) error {
 	validate := validator.New(validator.WithRequiredStructEnabled())
 
 	validate.RegisterValidation("validateCurrency", validateCurrency)
+	validate.RegisterValidation("onValidationEnum", onValidationEnum)
 	return validate.Struct(data)
 }
 
