@@ -117,3 +117,16 @@ type AuthorizeSingleTransferResponse struct {
 		DestinationBankCode      string `json:"destinationBankCode"`
 	} `json:"responseBody"`
 }
+
+type ResendTransferOTP struct {
+	Reference string `validate:"required" json:"reference"`
+}
+
+type ResendTransferOTPResponse struct {
+	RequestSuccessful bool   `json:"requestSuccessful"`
+	ResponseMessage   string `json:"responseMessage"`
+	ResponseCode      string `json:"responseCode"`
+	ResponseBody      struct {
+		Message string `json:"message"`
+	} `json:"responseBody"`
+}

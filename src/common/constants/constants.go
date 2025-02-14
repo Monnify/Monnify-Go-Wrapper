@@ -6,6 +6,7 @@ const (
 	BulkTransferEndpoint            = "/api/v2/disbursements/batch"
 	AuthorizeBulkTransferEndpoint   = "/api/v2/disbursements/batch/validate-otp"
 	AuthorizeSingleTransferEndpoint = "/api/v2/disbursements/single/validate-otp"
+	ResendTransferOTPEndpoint       = "/api/v2/disbursements/single/resend-otp"
 
 	AuthentionKey = "authentication"
 )
