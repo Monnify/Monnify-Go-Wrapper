@@ -135,6 +135,12 @@ type GetStatus struct {
 	Reference string `validate:"required" json:"reference"`
 }
 
+type GetBulkStatus struct {
+	Reference string `validate:"required" json:"reference"`
+	PageNo    int    `validate:"required,number,min=0" json:"pageNo"`
+	PageSize  int    `validate:"required,number,min=1" json:"pageSize"`
+}
+
 type TransferStatus struct {
 	Amount                   int    `json:"amount"`
 	Reference                string `json:"reference"`
@@ -197,9 +203,8 @@ type GetBulkTransferStatusResponse struct {
 }
 
 type GetAllSingleTransfer struct {
-	Reference string `validate:"required" json:"reference"`
-	PageNo    int    `validate:"required,number,min=0" json:"pageNo"`
-	PageSize  int    `validate:"required,number,min=1" json:"pageSize"`
+	PageNo   int `validate:"required,number,min=0" json:"pageNo"`
+	PageSize int `validate:"required,number,min=1" json:"pageSize"`
 }
 
 type GetAllSingleTransferResponse struct {
@@ -223,4 +228,9 @@ type GetAllSingleTransferResponse struct {
 		Number           int  `json:"number"`
 		Empty            bool `json:"empty"`
 	} `json:"responseBody"`
+}
+
+type GetAllBulkTransfer struct {
+	PageNo   int `validate:"required,number,min=0" json:"pageNo"`
+	PageSize int `validate:"required,number,min=1" json:"pageSize"`
 }
