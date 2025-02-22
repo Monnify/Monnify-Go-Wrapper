@@ -58,3 +58,24 @@ func (r *ReservedAccount) AddLinkedAccounts(body AddLinkedAccountSchema) (*AddLi
 
 	return resBody, nil
 }
+
+func (r *ReservedAccount) ReservedAccountDetails(body ReservedAccountDetailsSchema) (*ReservedAccountDetailsResponse, error) {
+	if err := utils.ValidateStruct(body); err != nil {
+		return nil, err
+	}
+
+	url := fmt.Sprintf(constants.ReservedAccountDetailsEndpoint, body.AccountReference)
+	res, err := r.request.Get(url)
+	if err != nil {
+		return nil, err
+	}
+
+	defer res.Body.Close()
+
+	resBody, err := utils.ParseResponse[ReservedAccountDetailsResponse](res.Body)
+	if err != nil {
+		return nil, err
+	}
+
+	return resBody, nil
+}

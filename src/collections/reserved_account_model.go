@@ -88,3 +88,41 @@ type AddLinkedAccountResponse struct {
 		RestrictPaymentSource bool          `json:"restrictPaymentSource"`
 	} `json:"responseBody"`
 }
+
+type ReservedAccountDetailsSchema struct {
+	AccountReference string `json:"accountReference" validate:"required"`
+}
+
+type ReservedAccountDetailsResponse struct {
+	RequestSuccessful bool   `json:"requestSuccessful"`
+	ResponseMessage   string `json:"responseMessage"`
+	ResponseCode      string `json:"responseCode"`
+	ResponseBody      struct {
+		ContractCode     string `json:"contractCode"`
+		AccountReference string `json:"accountReference"`
+		AccountName      string `json:"accountName"`
+		CurrencyCode     string `json:"currencyCode"`
+		CustomerEmail    string `json:"customerEmail"`
+		CustomerName     string `json:"customerName"`
+		Accounts         []struct {
+			AccountName   string `json:"accountName"`
+			AccountNumber string `json:"accountNumber"`
+			BankName      string `json:"bankName"`
+			BankCode      string `json:"bankCode"`
+		} `json:"accounts"`
+		CollectionChannel    string `json:"collectionChannel"`
+		ReservationReference string `json:"reservationReference"`
+		ReservedAccountType  string `json:"reservedAccountType"`
+		Status               string `json:"status"`
+		CreatedOn            string `json:"createdOn"`
+		Contract             struct {
+			Name        string `json:"name"`
+			Code        string `json:"code"`
+			Description string `json:"description"`
+		} `json:"contract"`
+		TransactionCount      int           `json:"transactionCount"`
+		IncomeSplitConfig     []IncomeSplit `json:"incomeSplitConfig"`
+		BVN                   string        `json:"bvn"`
+		RestrictPaymentSource bool          `json:"restrictPaymentSource"`
+	} `json:"responseBody"`
+}
