@@ -126,3 +126,73 @@ type ReservedAccountDetailsResponse struct {
 		RestrictPaymentSource bool          `json:"restrictPaymentSource"`
 	} `json:"responseBody"`
 }
+
+type ReservedAccountTransactionsSchema struct {
+	AccountReference string `json:"accountReference" validate:"required"`
+	Page             int    `json:"page" validate:"omitempty,min=0"`
+	Size             int    `json:"size" validate:"omitempty,min=1"`
+}
+
+func (s *ReservedAccountTransactionsSchema) SetDefault() {
+	if s.Size == 0 {
+		s.Size = 10
+	}
+}
+
+type ReservedAccountTransactionsResponse struct {
+	RequestSuccessful bool   `json:"requestSuccessful"`
+	ResponseMessage   string `json:"responseMessage"`
+	ResponseCode      string `json:"responseCode"`
+	ResponseBody      struct {
+		Content []struct {
+			CustomerDTO struct {
+				Email        string `json:"email"`
+				Name         string `json:"name"`
+				MerchantCode string `json:"merchantCode"`
+			} `json:"customerDTO"`
+			ProviderAmount       float64 `json:"providerAmount"`
+			PaymentMethod        string  `json:"paymentMethod"`
+			CreatedOn            string  `json:"createdOn"`
+			Amount               float64 `json:"amount"`
+			Flagged              bool    `json:"flagged"`
+			ProviderCode         string  `json:"providerCode"`
+			Fee                  float64 `json:"fee"`
+			CurrencyCode         string  `json:"currencyCode"`
+			CompletedOn          string  `json:"completedOn"`
+			PaymentDescription   string  `json:"paymentDescription"`
+			PaymentStatus        string  `json:"paymentStatus"`
+			TransactionReference string  `json:"transactionReference"`
+			PaymentReference     string  `json:"paymentReference"`
+			MerchantCode         string  `json:"merchantCode"`
+			MerchantName         string  `json:"merchantName"`
+			PayableAmount        float64 `json:"payableAmount"`
+			AmountPaid           float64 `json:"amountPaid"`
+			Completed            bool    `json:"completed"`
+		} `json:"content"`
+		Pageable struct {
+			Sort struct {
+				Sorted   bool `json:"sorted"`
+				Unsorted bool `json:"unsorted"`
+				Empty    bool `json:"empty"`
+			} `json:"sort"`
+			PageSize   int  `json:"pageSize"`
+			PageNumber int  `json:"pageNumber"`
+			Offset     int  `json:"offset"`
+			Paged      bool `json:"paged"`
+			Unpaged    bool `json:"unpaged"`
+		} `json:"pageable"`
+		Last          bool `json:"last"`
+		TotalPages    int  `json:"totalPages"`
+		TotalElements int  `json:"totalElements"`
+		Sort          struct {
+			Sorted   bool `json:"sorted"`
+			Unsorted bool `json:"unsorted"`
+			Empty    bool `json:"empty"`
+		} `json:"sort"`
+		First            bool `json:"first"`
+		NumberOfElements int  `json:"numberOfElements"`
+		Size             int  `json:"size"`
+		Number           int  `json:"number"`
+		Empty            bool `json:"empty"`
+	} `json:"responseBody"`
+}

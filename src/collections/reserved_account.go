@@ -79,3 +79,25 @@ func (r *ReservedAccount) ReservedAccountDetails(body ReservedAccountDetailsSche
 
 	return resBody, nil
 }
+
+func (r *ReservedAccount) ReservedAccountTransactions(body ReservedAccountTransactionsSchema) (*ReservedAccountTransactionsResponse, error) {
+	if err := utils.ValidateStruct(body); err != nil {
+		return nil, err
+	}
+
+	body.SetDefault()
+	url := fmt.Sprintf(constants.ReservedAccountTransactionsEndpoint, body.AccountReference, body.Page, body.Size)
+	res, err := r.request.Get(url)
+	if err != nil {
+		return nil, err
+	}
+
+	defer res.Body.Close()
+
+	resBody, err := utils.ParseResponse[ReservedAccountTransactionsResponse](res.Body)
+	if err != nil {
+		return nil, err
+	}
+
+	return resBody, nil
+}
