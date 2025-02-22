@@ -12,6 +12,7 @@ const (
 	AllSingleTransferEndpoint       = "/api/v2/disbursements/single/transactions?pageSize=%d&pageNo=%d"
 	AllBulkTransferEndpoint         = "/api/v2/disbursements/bulk/transactions?pageSize=%d&pageNo=%d"
 	CreateReservedAccountEndpoint   = "/api/v2/bank-transfer/reserved-accounts"
+	AddLinkedAccountEndpoint        = "/api/v1/bank-transfer/reserved-accounts/add-linked-accounts/%s"
 
 	AuthentionKey = "authentication"
 )

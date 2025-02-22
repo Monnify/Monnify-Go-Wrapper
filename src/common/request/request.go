@@ -141,3 +141,34 @@ func (h *HttpRequest) Get(url string) (*http.Response, error) {
 
 	return res, nil
 }
+
+func (h *HttpRequest) Put(url string, body any) (*http.Response, error) {
+	token, err := h.getToken()
+	if err != nil {
+		return nil, err
+	}
+
+	parsedBody, err := utils.ParseBody(body)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := h.CreateRequest(http.MethodPut, url, parsedBody)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("Authorization", token)
+
+	client := http.Client{
+		Timeout: 10 * time.Second,
+	}
+
+	res, err := client.Do(req)
+	if err != nil {
+		return nil, errors.New("error making http request")
+	}
+
+	return res, nil
+}

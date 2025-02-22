@@ -1,10 +1,11 @@
 package collections
 
 type IncomeSplit struct {
-	SubAccountCode  string  `json:"subAccountCode" validate:"required"`
-	SplitPercentage float64 `json:"splitPercentage" validate:"omitempty,min=0"`
-	FeePercentage   float64 `json:"feePercentage" validate:"omitempty,min=0"`
-	FeeBearer       bool    `json:"feeBearer" validate:"omitempty"`
+	SubAccountCode            string  `json:"subAccountCode" validate:"required"`
+	SplitPercentage           float64 `json:"splitPercentage" validate:"omitempty,min=0"`
+	FeePercentage             float64 `json:"feePercentage" validate:"omitempty,min=0"`
+	FeeBearer                 bool    `json:"feeBearer" validate:"omitempty"`
+	ReservedAccountConfigCode bool    `json:"reservedAccountConfigCode" validate:"omitempty"`
 }
 
 type ReservedAccountSchema struct {
@@ -50,6 +51,40 @@ type ReservedAccountResponse struct {
 		Status                string        `json:"status"`
 		CreatedOn             string        `json:"createdOn"`
 		IncomeSplitConfig     []IncomeSplit `json:"incomeSplitConfig"`
+		RestrictPaymentSource bool          `json:"restrictPaymentSource"`
+	} `json:"responseBody"`
+}
+
+type AddLinkedAccountSchema struct {
+	AccountReference     string   `json:"accountReference" validate:"required"`
+	GetAllAvailableBanks bool     `json:"getAllAvailableBanks" validate:"omitempty"`
+	PreferredBanks       []string `json:"preferredBanks" validate:"dive,required_if=GetAllAvailableBanks,false"`
+}
+
+type AddLinkedAccountResponse struct {
+	RequestSuccessful bool   `json:"requestSuccessful"`
+	ResponseMessage   string `json:"responseMessage"`
+	ResponseCode      string `json:"responseCode"`
+	ResponseBody      struct {
+		ContractCode     string `json:"contractCode"`
+		AccountReference string `json:"accountReference"`
+		AccountName      string `json:"accountName"`
+		CurrencyCode     string `json:"currencyCode"`
+		CustomerEmail    string `json:"customerEmail"`
+		CustomerName     string `json:"customerName"`
+		Accounts         []struct {
+			AccountName   string `json:"accountName"`
+			AccountNumber string `json:"accountNumber"`
+			BankName      string `json:"bankName"`
+			BankCode      string `json:"bankCode"`
+		} `json:"accounts"`
+		CollectionChannel     string        `json:"collectionChannel"`
+		ReservationReference  string        `json:"reservationReference"`
+		ReservedAccountType   string        `json:"reservedAccountType"`
+		Status                string        `json:"status"`
+		CreatedOn             string        `json:"createdOn"`
+		IncomeSplitConfig     []IncomeSplit `json:"incomeSplitConfig"`
+		BVN                   string        `json:"bvn"`
 		RestrictPaymentSource bool          `json:"restrictPaymentSource"`
 	} `json:"responseBody"`
 }
