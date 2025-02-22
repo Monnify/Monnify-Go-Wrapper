@@ -15,6 +15,7 @@ const (
 	AddLinkedAccountEndpoint            = "/api/v1/bank-transfer/reserved-accounts/add-linked-accounts/%s"
 	ReservedAccountDetailsEndpoint      = "/api/v2/bank-transfer/reserved-accounts/%s"
 	ReservedAccountTransactionsEndpoint = "/api/v1/bank-transfer/reserved-accounts/transactions?accountReference=%s&page=%d&size=%d"
+	DeallocateReservedAccountEndpoint   = "/api/v1/bank-transfer/reserved-accounts/reference/%s"
 
 	AuthentionKey = "authentication"
 )

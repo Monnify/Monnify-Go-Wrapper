@@ -196,3 +196,30 @@ type ReservedAccountTransactionsResponse struct {
 		Empty            bool `json:"empty"`
 	} `json:"responseBody"`
 }
+
+type DeallocateReservedAccountSchema struct {
+	AccountReference string `json:"accountReference" validate:"required"`
+}
+type DeallocateReservedAccountResponse struct {
+	RequestSuccessful bool   `json:"requestSuccessful"`
+	ResponseMessage   string `json:"responseMessage"`
+	ResponseCode      string `json:"responseCode"`
+	ResponseBody      struct {
+		ContractCode          string        `json:"contractCode"`
+		AccountReference      string        `json:"accountReference"`
+		AccountName           string        `json:"accountName"`
+		CurrencyCode          string        `json:"currencyCode"`
+		CustomerEmail         string        `json:"customerEmail"`
+		CustomerName          string        `json:"customerName"`
+		AccountNumber         string        `json:"accountNumber"`
+		BankName              string        `json:"bankName"`
+		BankCode              string        `json:"bankCode"`
+		CollectionChannel     string        `json:"collectionChannel"`
+		ReservationReference  string        `json:"reservationReference"`
+		ReservedAccountType   string        `json:"reservedAccountType"`
+		Status                string        `json:"status"`
+		CreatedOn             string        `json:"createdOn"`
+		IncomeSplitConfig     []IncomeSplit `json:"incomeSplitConfig"`
+		RestrictPaymentSource bool          `json:"restrictPaymentSource"`
+	} `json:"responseBody"`
+}

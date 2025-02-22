@@ -101,3 +101,24 @@ func (r *ReservedAccount) ReservedAccountTransactions(body ReservedAccountTransa
 
 	return resBody, nil
 }
+
+func (r *ReservedAccount) DeallocateReservedAccount(body DeallocateReservedAccountSchema) (*DeallocateReservedAccountResponse, error) {
+	if err := utils.ValidateStruct(body); err != nil {
+		return nil, err
+	}
+
+	url := fmt.Sprintf(constants.DeallocateReservedAccountEndpoint, body.AccountReference)
+	res, err := r.request.Delete(url)
+	if err != nil {
+		return nil, err
+	}
+
+	defer res.Body.Close()
+
+	resBody, err := utils.ParseResponse[DeallocateReservedAccountResponse](res.Body)
+	if err != nil {
+		return nil, err
+	}
+
+	return resBody, nil
+}
