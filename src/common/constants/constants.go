@@ -11,11 +11,7 @@ const (
 	GetBulkTransferStatusEndpoint   = "/api/v2/disbursements/bulk/%s/transactions?pageSize=%d&pageNo=%d"
 	AllSingleTransferEndpoint       = "/api/v2/disbursements/single/transactions?pageSize=%d&pageNo=%d"
 	AllBulkTransferEndpoint         = "/api/v2/disbursements/bulk/transactions?pageSize=%d&pageNo=%d"
+	CreateReservedAccountEndpoint   = "/api/v2/bank-transfer/reserved-accounts"
 
 	AuthentionKey = "authentication"
-)
-
-var (
-	SupportedCurrency = []string{"NGN"}
-	OnValidationEnum  = []string{"BREAK", "CONTINUE"}
 )

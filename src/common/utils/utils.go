@@ -4,11 +4,8 @@ import (
 	"bytes"
 	"encoding/json"
 	"errors"
-	"io"
-	"slices"
-
-	"github.com/Monnify/Monnify-Go-Wrapper/src/common/constants"
 	"github.com/go-playground/validator/v10"
+	"io"
 )
 
 func GetBaseUrl(isProduction bool) string {
@@ -19,37 +16,9 @@ func GetBaseUrl(isProduction bool) string {
 	return "https://sandbox.monnify.com"
 }
 
-func validateCurrency(fl validator.FieldLevel) bool {
-	field, ok := fl.Field().Interface().(string)
-	if !ok {
-		return false
-	}
-
-	if !slices.Contains(constants.SupportedCurrency, field) {
-		return false
-	}
-
-	return true
-}
-
-func onValidationEnum(fl validator.FieldLevel) bool {
-	field, ok := fl.Field().Interface().(string)
-	if !ok {
-		return false
-	}
-
-	if !slices.Contains(constants.OnValidationEnum, field) {
-		return false
-	}
-
-	return true
-}
-
 func ValidateStruct(data any) error {
 	validate := validator.New(validator.WithRequiredStructEnabled())
 
-	validate.RegisterValidation("validateCurrency", validateCurrency)
-	validate.RegisterValidation("onValidationEnum", onValidationEnum)
 	return validate.Struct(data)
 }
 
