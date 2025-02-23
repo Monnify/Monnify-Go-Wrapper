@@ -223,3 +223,11 @@ type DeallocateReservedAccountResponse struct {
 		RestrictPaymentSource bool          `json:"restrictPaymentSource"`
 	} `json:"responseBody"`
 }
+
+type UpdateReservedAccountKycInfoSchema struct {
+	AccountReference string `json:"accountReference" validate:"required"`
+	Bvn              string `json:"bvn" validate:"omitempty,len=11,required_without=Nin"`
+	Nin              string `json:"nin" validate:"omitempty,len=11"`
+}
+
+type UpdateReservedAccountKycInfoResponse struct{}
