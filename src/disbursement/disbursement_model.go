@@ -6,7 +6,7 @@ type SingleTransfer struct {
 	Narration                string  `validate:"required,min=3" json:"narration"`
 	DestinationBankCode      string  `validate:"required,number,min=3" json:"destinationBankCode"`
 	DestinationAccountNumber string  `validate:"required,number,len=10" json:"destinationAccountNumber"`
-	CurrencyCode             string  `validate:"validateCurrency" json:"currencyCode"`
+	CurrencyCode             string  `validate:"omitempty,oneof=NGN" json:"currencyCode"`
 	SourceAccountNumber      string  `validate:"required,number,len=10" json:"sourceAccountNumber"`
 }
 
@@ -39,13 +39,13 @@ type bulkTransferTransactionList struct {
 	Amount                   float64 `validate:"required,number,min=20" json:"amount"`
 	DestinationBankCode      string  `validate:"required,number,min=3" json:"destinationBankCode"`
 	Reference                string  `validate:"required" json:"reference"`
-	CurrencyCode             string  `validate:"validateCurrency" json:"currencyCode"`
+	CurrencyCode             string  `validate:"omitempty,oneof=NGN" json:"currencyCode"`
 }
 
 type BulkTransfer struct {
 	Title                string                        `validate:"required,min=5" json:"title"`
 	BatchReference       string                        `validate:"required" json:"batchReference"`
-	OnValidationFailure  string                        `validate:"onValidationEnum" json:"onValidationFailure"`
+	OnValidationFailure  string                        `validate:"omitempty,oneof=BREAK CONTINUE" json:"onValidationFailure"`
 	NotificationInterval int                           `validate:"number,min=10" json:"notificationInterval"`
 	Narration            string                        `validate:"required,min=3" json:"narration"`
 	SourceAccountNumber  string                        `validate:"number,len=10" json:"sourceAccountNumber"`
