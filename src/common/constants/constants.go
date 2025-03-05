@@ -17,6 +17,10 @@ const (
 	ReservedAccountTransactionsEndpoint  = "/api/v1/bank-transfer/reserved-accounts/transactions?accountReference=%s&page=%d&size=%d"
 	DeallocateReservedAccountEndpoint    = "/api/v1/bank-transfer/reserved-accounts/reference/%s"
 	UpdateReservedAccountKycInfoEndpoint = "/api/v1/bank-transfer/reserved-accounts/%s/kyc-info"
+	CreateSubAccountEndpoint             = "/api/v1/sub-accounts"
+	DeleteSubAccountEndpoint             = "/api/v1/sub-accounts/%s"
+	GetSubAccountEndpoint                = "/api/v1/sub-accounts"
+	UpdateSubAccountEndpoint             = "/api/v1/sub-accounts"
 
 	AuthentionKey = "authentication"
 )

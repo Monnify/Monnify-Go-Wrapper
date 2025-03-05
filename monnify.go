@@ -1,6 +1,7 @@
 package monnify
 
 import (
+	"github.com/Monnify/Monnify-Go-Wrapper/src/collections"
 	"github.com/Monnify/Monnify-Go-Wrapper/src/common/request"
 	"github.com/Monnify/Monnify-Go-Wrapper/src/common/utils"
 	"github.com/Monnify/Monnify-Go-Wrapper/src/disbursement"
@@ -13,7 +14,9 @@ type MonnifyOptions struct {
 }
 
 type Monnify struct {
-	Disbursement *disbursement.Disbursement
+	Disbursement    *disbursement.Disbursement
+	ReservedAccount *collections.ReservedAccount
+	SubAccount      *collections.SubAccount
 }
 
 func New(options *MonnifyOptions) *Monnify {
@@ -21,6 +24,8 @@ func New(options *MonnifyOptions) *Monnify {
 	request := request.NewHttpRequest(baseUrl, options.ApiKey+":"+options.SecretKey)
 
 	return &Monnify{
-		Disbursement: disbursement.NewDisbursement(request),
+		Disbursement:    disbursement.NewDisbursement(request),
+		ReservedAccount: collections.NewReservedAccount(request),
+		SubAccount:      collections.NewSubAccount(request),
 	}
 }
