@@ -25,3 +25,13 @@ type CreateSubAccountResponse struct {
 		SettlementReportEmails []string `json:"settlementReportEmails"`
 	} `json:"responseBody"`
 }
+
+type DeleteSubAccountModel struct {
+	SubAccountCode string `json:"subAccountCode" validate:"required"`
+}
+
+type DeleteSubAccountResponse struct {
+	RequestSuccessful bool   `json:"requestSuccessful"`
+	ResponseMessage   string `json:"responseMessage"`
+	ResponseCode      string `json:"responseCode"`
+}

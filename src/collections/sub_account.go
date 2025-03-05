@@ -1,6 +1,9 @@
 package collections
 
 import (
+	"fmt"
+	"net/url"
+
 	"github.com/Monnify/Monnify-Go-Wrapper/src/common/constants"
 	"github.com/Monnify/Monnify-Go-Wrapper/src/common/request"
 	"github.com/Monnify/Monnify-Go-Wrapper/src/common/utils"
@@ -27,6 +30,28 @@ func (s *SubAccount) CreateSubAccount(body CreateSubAccountModel) (*CreateSubAcc
 	defer res.Body.Close()
 
 	resBody, err := utils.ParseResponse[CreateSubAccountResponse](res.Body)
+	if err != nil {
+		return nil, err
+	}
+
+	return resBody, nil
+}
+
+func (s *SubAccount) DeleteSubAccount(body DeleteSubAccountModel) (*DeleteSubAccountResponse, error) {
+	if err := utils.ValidateStruct(body); err != nil {
+		return nil, err
+	}
+
+	encodedSubAccountCode := url.QueryEscape(body.SubAccountCode)
+	newUrl := fmt.Sprintf(constants.DeleteSubAccountEndpoint, encodedSubAccountCode)
+	res, err := s.request.Delete(newUrl)
+	if err != nil {
+		return nil, err
+	}
+
+	defer res.Body.Close()
+
+	resBody, err := utils.ParseResponse[DeleteSubAccountResponse](res.Body)
 	if err != nil {
 		return nil, err
 	}
