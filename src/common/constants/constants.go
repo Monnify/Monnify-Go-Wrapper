@@ -20,6 +20,7 @@ const (
 	CreateSubAccountEndpoint             = "/api/v1/sub-accounts"
 	DeleteSubAccountEndpoint             = "/api/v1/sub-accounts/%s"
 	GetSubAccountEndpoint                = "/api/v1/sub-accounts"
+	UpdateSubAccountEndpoint             = "/api/v1/sub-accounts"
 
 	AuthentionKey = "authentication"
 )

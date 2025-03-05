@@ -74,3 +74,23 @@ func (s *SubAccount) GetSubAccounts() (*GetSubAccountsResponse, error) {
 
 	return resBody, nil
 }
+
+func (s *SubAccount) UpdateSubAccount(body UpdateSubAccountModel) (*UpdateSubAccountResponse, error) {
+	if err := utils.ValidateStruct(body); err != nil {
+		return nil, err
+	}
+
+	res, err := s.request.Put(constants.UpdateSubAccountEndpoint, body)
+	if err != nil {
+		return nil, err
+	}
+
+	defer res.Body.Close()
+
+	resBody, err := utils.ParseResponse[UpdateSubAccountResponse](res.Body)
+	if err != nil {
+		return nil, err
+	}
+
+	return resBody, nil
+}
