@@ -19,6 +19,7 @@ const (
 	UpdateReservedAccountKycInfoEndpoint = "/api/v1/bank-transfer/reserved-accounts/%s/kyc-info"
 	CreateSubAccountEndpoint             = "/api/v1/sub-accounts"
 	DeleteSubAccountEndpoint             = "/api/v1/sub-accounts/%s"
+	GetSubAccountEndpoint                = "/api/v1/sub-accounts"
 
 	AuthentionKey = "authentication"
 )

@@ -58,3 +58,19 @@ func (s *SubAccount) DeleteSubAccount(body DeleteSubAccountModel) (*DeleteSubAcc
 
 	return resBody, nil
 }
+
+func (s *SubAccount) GetSubAccounts() (*GetSubAccountsResponse, error) {
+	res, err := s.request.Get(constants.GetSubAccountEndpoint)
+	if err != nil {
+		return nil, err
+	}
+
+	defer res.Body.Close()
+
+	resBody, err := utils.ParseResponse[GetSubAccountsResponse](res.Body)
+	if err != nil {
+		return nil, err
+	}
+
+	return resBody, nil
+}
