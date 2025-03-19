@@ -21,6 +21,7 @@ const (
 	DeleteSubAccountEndpoint             = "/api/v1/sub-accounts/%s"
 	GetSubAccountEndpoint                = "/api/v1/sub-accounts"
 	UpdateSubAccountEndpoint             = "/api/v1/sub-accounts"
+	InitTransactionEndpoint              = "/api/v1/merchant/transactions/init-transaction"
 
 	AuthentionKey = "authentication"
 )
