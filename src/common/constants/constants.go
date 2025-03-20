@@ -27,6 +27,8 @@ const (
 	ChargeCardEndpoint                   = "/api/v1/merchant/cards/charge"
 	ThreeDsSecureAuthTransactionEndpoint = "/api/v1/sdk/cards/secure-3d/authorize"
 	CardTokenizationEndpoint             = "/api/v1/merchant/cards/charge-card-token"
+	AuthorizeOTPEndpoint                 = "/api/v1/merchant/cards/otp/authorize"
+	GetTransactionStatusv1Endpoint       = "/api/v2/merchant/transactions/query?paymentReference=%s"
 
 	AuthentionKey = "authentication"
 )

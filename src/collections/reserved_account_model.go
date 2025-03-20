@@ -230,4 +230,15 @@ type UpdateReservedAccountKycInfoSchema struct {
 	Nin              string `json:"nin" validate:"omitempty,len=11"`
 }
 
-type UpdateReservedAccountKycInfoResponse struct{}
+type UpdateReservedAccountKycInfoResponse struct {
+	RequestSuccessful bool   `json:"requestSuccessful"`
+	ResponseMessage   string `json:"responseMessage"`
+	ResponseCode      string `json:"responseCode"`
+	ResponseBody      struct {
+		AccountReference string `json:"accountReference"`
+		AccountName      string `json:"accountName"`
+		CustomerEmail    string `json:"customerEmail"`
+		CustomerName     string `json:"customerName"`
+		Bvn              string `json:"bvn"`
+	} `json:"responseBody"`
+}

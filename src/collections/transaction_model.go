@@ -95,6 +95,47 @@ type GetTransactionStatusv1Model struct {
 }
 
 type GetTransactionStatusv1Response struct {
+	RequestSuccessful bool   `json:"requestSuccessful"`
+	ResponseMessage   string `json:"responseMessage"`
+	ResponseCode      string `json:"responseCode"`
+	ResponseBody      struct {
+		TransactionReference string `json:"transactionReference"`
+		PaymentReference     string `json:"paymentReference"`
+		AmountPaid           string `json:"amountPaid"`
+		TotalPayable         string `json:"totalPayable"`
+		SettlementAmount     string `json:"settlementAmount"`
+		PaidOn               string `json:"paidOn"`
+		PaymentStatus        string `json:"paymentStatus"`
+		PaymentDescription   string `json:"paymentDescription"`
+		Currency             string `json:"currency"`
+		PaymentMethod        string `json:"paymentMethod"`
+		Product              struct {
+			Type      string `json:"type"`
+			Reference string `json:"reference"`
+		} `json:"product"`
+		CardDetails struct {
+			CardType             string      `json:"cardType"`
+			Last4                string      `json:"last4"`
+			ExpMonth             string      `json:"expMonth"`
+			ExpYear              string      `json:"expYear"`
+			Bin                  string      `json:"bin"`
+			BankCode             interface{} `json:"bankCode"`
+			BankName             interface{} `json:"bankName"`
+			Reusable             bool        `json:"reusable"`
+			CountryCode          interface{} `json:"countryCode"`
+			CardToken            interface{} `json:"cardToken"`
+			SupportsTokenization bool        `json:"supportsTokenization"`
+			MaskedPan            string      `json:"maskedPan"`
+		} `json:"cardDetails"`
+		AccountDetails  interface{}   `json:"accountDetails"`
+		AccountPayments []interface{} `json:"accountPayments"`
+		Customer        struct {
+			Email string `json:"email"`
+			Name  string `json:"name"`
+		} `json:"customer"`
+		MetaData struct {
+		} `json:"metaData"`
+	} `json:"responseBody"`
 }
 
 type PayWithUssdModel struct {
@@ -137,10 +178,10 @@ type ChargeCardModel struct {
 	TransactionReference string `json:"transactionReference" validate:"required"`
 	CollectionChannel    string `json:"collectionChannel" validate:"required"`
 	Card                 struct {
-		Number      int `json:"number" validate:"required,number"`
-		ExpiryMonth int `json:"expiryMonth" validate:"required,number,len=2"`
-		ExpiryYear  int `json:"expiryYear" validate:"required,number,len=4"`
-		CVV         int `json:"cvv" validate:"required,number,len=3"`
+		Number      string `json:"number" validate:"required,number"`
+		ExpiryMonth string `json:"expiryMonth" validate:"required,number,len=2"`
+		ExpiryYear  string `json:"expiryYear" validate:"required,number,len=4"`
+		CVV         string `json:"cvv" validate:"required,number,len=3"`
 	} `json:"card" validate:"required"`
 	DeviceInformation interface{} `json:"deviceInformation" validate:"required"`
 }
@@ -159,19 +200,34 @@ type ChargeCardResponse struct {
 }
 
 type AuthorizeOTPModel struct {
+	TransactionReference string `json:"transactionReference" validate:"required"`
+	CollectionChannel    string `json:"collectionChannel" validate:"required"`
+	TokenId              string `json:"tokenId" validate:"required,alphanum"`
+	Token                string `json:"token" validate:"required,number"`
 }
 
 type AuthorizeOTPResponse struct {
+	RequestSuccessful bool   `json:"requestSuccessful"`
+	ResponseMessage   string `json:"responseMessage"`
+	ResponseCode      string `json:"responseCode"`
+	ResponseBody      struct {
+		PaymentStatus        string `json:"paymentStatus"`
+		PaymentDescription   string `json:"paymentDescription"`
+		TransactionReference string `json:"transactionReference"`
+		PaymentReference     string `json:"paymentReference"`
+		AmountPaid           int    `json:"amountPaid"`
+		CurrencyPaid         string `json:"currencyPaid"`
+	} `json:"responseBody"`
 }
 
 type ThreeDsSecureAuthTransactionModel struct {
 	TransactionReference string `json:"transactionReference" validate:"required"`
 	CollectionChannel    string `json:"collectionChannel" validate:"required"`
 	Card                 struct {
-		Number      int `json:"number" validate:"required,number"`
-		ExpiryMonth int `json:"expiryMonth" validate:"required,number,len=2"`
-		ExpiryYear  int `json:"expiryYear" validate:"required,number,len=4"`
-		CVV         int `json:"cvv" validate:"required,number,len=3"`
+		Number      string `json:"number" validate:"required,number"`
+		ExpiryMonth string `json:"expiryMonth" validate:"required,number,len=2"`
+		ExpiryYear  string `json:"expiryYear" validate:"required,number,len=4"`
+		CVV         string `json:"cvv" validate:"required,number,len=3"`
 	} `json:"card" validate:"required"`
 	ApiKey string `json:"apiKey" validate:"required"`
 }

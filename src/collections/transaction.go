@@ -58,27 +58,26 @@ func (t *Transaction) GetTransactionStatusv2(body GetTransactionStatusv2Model) (
 	return resBody, nil
 }
 
-// TODO: can't find the endpoint for v1
-//func (t *Transaction) GetTransactionStatusv1(body GetTransactionStatusv1Model) (*GetTransactionStatusv1Response, error) {
-//	if err := utils.ValidateStruct(body); err != nil {
-//		return nil, err
-//	}
-//
-//	url := fmt.Sprintf(constants.GetTransactionStatusv2Endpoint, body.PaymentReference)
-//	res, err := t.request.Get(url)
-//	if err != nil {
-//		return nil, err
-//	}
-//
-//	defer res.Body.Close()
-//
-//	resBody, err := utils.ParseResponse[GetTransactionStatusv1Response](res.Body)
-//	if err != nil {
-//		return nil, err
-//	}
-//
-//	return resBody, nil
-//}
+func (t *Transaction) GetTransactionStatusv1(body GetTransactionStatusv1Model) (*GetTransactionStatusv1Response, error) {
+	if err := utils.ValidateStruct(body); err != nil {
+		return nil, err
+	}
+
+	url := fmt.Sprintf(constants.GetTransactionStatusv1Endpoint, body.PaymentReference)
+	res, err := t.request.Get(url)
+	if err != nil {
+		return nil, err
+	}
+
+	defer res.Body.Close()
+
+	resBody, err := utils.ParseResponse[GetTransactionStatusv1Response](res.Body)
+	if err != nil {
+		return nil, err
+	}
+
+	return resBody, nil
+}
 
 // TODO: can't find the endpoint for PayWithUssd
 //func (t *Transaction) PayWithUssd(body PayWithUssdModel) (*PayWithUssdResponse, error) {
@@ -125,10 +124,25 @@ func (t *Transaction) ChargeCard(body ChargeCardModel) (*ChargeCardResponse, err
 	return resBody, nil
 }
 
-// TODO: can't find the endpoint for AuthorizeOTP
-//func (t *Transaction) AuthorizeOTP(body AuthorizeOTPModel) (*AuthorizeOTPResponse, error) {
-//
-//}
+func (t *Transaction) AuthorizeOTP(body AuthorizeOTPModel) (*AuthorizeOTPResponse, error) {
+	if err := utils.ValidateStruct(body); err != nil {
+		return nil, err
+	}
+
+	res, err := t.request.Post(constants.AuthorizeOTPEndpoint, body)
+	if err != nil {
+		return nil, err
+	}
+
+	defer res.Body.Close()
+
+	resBody, err := utils.ParseResponse[AuthorizeOTPResponse](res.Body)
+	if err != nil {
+		return nil, err
+	}
+
+	return resBody, nil
+}
 
 func (t *Transaction) ThreeDsSecureAuthTransaction(body ThreeDsSecureAuthTransactionModel) (*ThreeDsSecureAuthTransactionResponse, error) {
 	if err := utils.ValidateStruct(body); err != nil {
