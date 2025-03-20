@@ -124,23 +124,23 @@ func (r *ReservedAccount) DeallocateReservedAccount(body DeallocateReservedAccou
 }
 
 // TODO: PENDING: UpdateReservedAccountKycInfo
-func (r *ReservedAccount) UpdateReservedAccountKycInfo(body UpdateReservedAccountKycInfoSchema) (*UpdateReservedAccountKycInfoResponse, error) {
-	if err := utils.ValidateStruct(body); err != nil {
-		return nil, err
-	}
-
-	url := fmt.Sprintf(constants.UpdateReservedAccountKycInfoEndpoint, body.AccountReference)
-	res, err := r.request.Put(url, body)
-	if err != nil {
-		return nil, err
-	}
-
-	defer res.Body.Close()
-
-	resBody, err := utils.ParseResponse[UpdateReservedAccountKycInfoResponse](res.Body)
-	if err != nil {
-		return nil, err
-	}
-
-	return resBody, nil
-}
+//func (r *ReservedAccount) UpdateReservedAccountKycInfo(body UpdateReservedAccountKycInfoSchema) (*UpdateReservedAccountKycInfoResponse, error) {
+//	if err := utils.ValidateStruct(body); err != nil {
+//		return nil, err
+//	}
+//
+//	url := fmt.Sprintf(constants.UpdateReservedAccountKycInfoEndpoint, body.AccountReference)
+//	res, err := r.request.Put(url, body)
+//	if err != nil {
+//		return nil, err
+//	}
+//
+//	defer res.Body.Close()
+//
+//	resBody, err := utils.ParseResponse[UpdateReservedAccountKycInfoResponse](res.Body)
+//	if err != nil {
+//		return nil, err
+//	}
+//
+//	return resBody, nil
+//}

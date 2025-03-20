@@ -7,7 +7,7 @@ import (
 	"github.com/Monnify/Monnify-Go-Wrapper/src/disbursement"
 )
 
-type MonnifyOptions struct {
+type Options struct {
 	ApiKey       string
 	SecretKey    string
 	IsProduction bool
@@ -17,15 +17,17 @@ type Monnify struct {
 	Disbursement    *disbursement.Disbursement
 	ReservedAccount *collections.ReservedAccount
 	SubAccount      *collections.SubAccount
+	Transaction     *collections.Transaction
 }
 
-func New(options *MonnifyOptions) *Monnify {
+func New(options *Options) *Monnify {
 	baseUrl := utils.GetBaseUrl(options.IsProduction)
-	request := request.NewHttpRequest(baseUrl, options.ApiKey+":"+options.SecretKey)
+	httpRequest := request.NewHttpRequest(baseUrl, options.ApiKey+":"+options.SecretKey)
 
 	return &Monnify{
-		Disbursement:    disbursement.NewDisbursement(request),
-		ReservedAccount: collections.NewReservedAccount(request),
-		SubAccount:      collections.NewSubAccount(request),
+		Disbursement:    disbursement.NewDisbursement(httpRequest),
+		ReservedAccount: collections.NewReservedAccount(httpRequest),
+		SubAccount:      collections.NewSubAccount(httpRequest),
+		Transaction:     collections.NewTransaction(httpRequest),
 	}
 }

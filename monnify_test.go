@@ -7,7 +7,7 @@ import (
 )
 
 func TestInitialization(t *testing.T) {
-	result := New(&MonnifyOptions{
+	result := New(&Options{
 		ApiKey:    "",
 		SecretKey: "",
 	})

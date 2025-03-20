@@ -21,6 +21,12 @@ const (
 	DeleteSubAccountEndpoint             = "/api/v1/sub-accounts/%s"
 	GetSubAccountEndpoint                = "/api/v1/sub-accounts"
 	UpdateSubAccountEndpoint             = "/api/v1/sub-accounts"
+	InitTransactionEndpoint              = "/api/v1/merchant/transactions/init-transaction"
+	GetTransactionStatusv2Endpoint       = "/api/v2/transactions/%s"
+	PayWithBankTransferEndpoint          = "/api/v1/merchant/bank-transfer/init-payment"
+	ChargeCardEndpoint                   = "/api/v1/merchant/cards/charge"
+	ThreeDsSecureAuthTransactionEndpoint = "/api/v1/sdk/cards/secure-3d/authorize"
+	CardTokenizationEndpoint             = "/api/v1/merchant/cards/charge-card-token"
 
 	AuthentionKey = "authentication"
 )
