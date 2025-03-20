@@ -185,6 +185,7 @@ func (d *Disbursement) GetAllSingleTransfer(body GetAllSingleTransfer) (*GetAllS
 	return resBody, nil
 }
 
+// TODO: can't find the endpoint for GetAllBulkTransfer
 // func (d *Disbursement) GetAllBulkTransfer(body GetAllBulkTransfer) (*GetAllSingleTransferResponse, error) {
 // 	if err := utils.ValidateStruct(body); err != nil {
 // 		return nil, err
