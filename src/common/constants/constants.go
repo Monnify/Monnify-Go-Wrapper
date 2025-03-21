@@ -29,6 +29,9 @@ const (
 	CardTokenizationEndpoint             = "/api/v1/merchant/cards/charge-card-token"
 	AuthorizeOTPEndpoint                 = "/api/v1/merchant/cards/otp/authorize"
 	GetTransactionStatusv1Endpoint       = "/api/v2/merchant/transactions/query?paymentReference=%s"
+	InitiateRefundEndpoint               = "/api/v1/refunds/initiate-refund"
+	GetAllRefundsEndpoint                = "/api/v1/refunds?page=%d&size=%d"
+	GetRefundStatusEndpoint              = "/api/v1/refunds/%s"
 
 	AuthentionKey = "authentication"
 )
