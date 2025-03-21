@@ -6,7 +6,7 @@ type SingleTransfer struct {
 	Narration                string  `validate:"required,min=3" json:"narration"`
 	DestinationBankCode      string  `validate:"required,number,min=3" json:"destinationBankCode"`
 	DestinationAccountNumber string  `validate:"required,number,len=10" json:"destinationAccountNumber"`
-	CurrencyCode             string  `validate:"omitempty,oneof=NGN" json:"currencyCode"`
+	CurrencyCode             string  `validate:"omitempty,oneof=NGN USD EUR" json:"currencyCode"`
 	SourceAccountNumber      string  `validate:"required,number,len=10" json:"sourceAccountNumber"`
 }
 

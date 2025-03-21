@@ -18,6 +18,7 @@ type Monnify struct {
 	ReservedAccount *collections.ReservedAccount
 	SubAccount      *collections.SubAccount
 	Transaction     *collections.Transaction
+	Refund          *disbursement.Refund
 }
 
 func New(options *Options) *Monnify {
@@ -29,5 +30,6 @@ func New(options *Options) *Monnify {
 		ReservedAccount: collections.NewReservedAccount(httpRequest),
 		SubAccount:      collections.NewSubAccount(httpRequest),
 		Transaction:     collections.NewTransaction(httpRequest),
+		Refund:          disbursement.NewRefund(httpRequest),
 	}
 }
