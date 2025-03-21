@@ -123,7 +123,6 @@ func (r *ReservedAccount) DeallocateReservedAccount(body DeallocateReservedAccou
 	return resBody, nil
 }
 
-// TODO: PENDING: UpdateReservedAccountKycInfo
 func (r *ReservedAccount) UpdateReservedAccountKycInfo(body UpdateReservedAccountKycInfoSchema) (*UpdateReservedAccountKycInfoResponse, error) {
 	if err := utils.ValidateStruct(body); err != nil {
 		return nil, err

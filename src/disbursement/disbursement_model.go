@@ -234,3 +234,44 @@ type GetAllBulkTransfer struct {
 	PageNo   int `validate:"required,number,min=0" json:"pageNo"`
 	PageSize int `validate:"required,number,min=1" json:"pageSize"`
 }
+
+type GetAllBulkTransferResponse struct {
+	RequestSuccessful bool   `json:"requestSuccessful"`
+	ResponseMessage   string `json:"responseMessage"`
+	ResponseCode      string `json:"responseCode"`
+	ResponseBody      struct {
+		Content []struct {
+			TotalAmount            int    `json:"totalAmount"`
+			TotalFee               int    `json:"totalFee"`
+			BatchReference         string `json:"batchReference"`
+			BatchStatus            string `json:"batchStatus"`
+			TotalTransactionsCount int    `json:"totalTransactionsCount"`
+			DateCreated            string `json:"dateCreated"`
+		} `json:"content"`
+		Pageable struct {
+			Sort struct {
+				Sorted   bool `json:"sorted"`
+				Unsorted bool `json:"unsorted"`
+				Empty    bool `json:"empty"`
+			} `json:"sort"`
+			PageSize   int  `json:"pageSize"`
+			PageNumber int  `json:"pageNumber"`
+			Offset     int  `json:"offset"`
+			Unpaged    bool `json:"unpaged"`
+			Paged      bool `json:"paged"`
+		} `json:"pageable"`
+		TotalPages    int  `json:"totalPages"`
+		Last          bool `json:"last"`
+		TotalElements int  `json:"totalElements"`
+		Sort          struct {
+			Sorted   bool `json:"sorted"`
+			Unsorted bool `json:"unsorted"`
+			Empty    bool `json:"empty"`
+		} `json:"sort"`
+		First            bool `json:"first"`
+		NumberOfElements int  `json:"numberOfElements"`
+		Size             int  `json:"size"`
+		Number           int  `json:"number"`
+		Empty            bool `json:"empty"`
+	} `json:"responseBody"`
+}
