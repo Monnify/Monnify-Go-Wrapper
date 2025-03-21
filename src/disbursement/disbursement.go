@@ -185,24 +185,23 @@ func (d *Disbursement) GetAllSingleTransfer(body GetAllSingleTransfer) (*GetAllS
 	return resBody, nil
 }
 
-// TODO: can't find the endpoint for GetAllBulkTransfer
-// func (d *Disbursement) GetAllBulkTransfer(body GetAllBulkTransfer) (*GetAllSingleTransferResponse, error) {
-// 	if err := utils.ValidateStruct(body); err != nil {
-// 		return nil, err
-// 	}
+func (d *Disbursement) GetAllBulkTransfer(body GetAllBulkTransfer) (*GetAllBulkTransferResponse, error) {
+	if err := utils.ValidateStruct(body); err != nil {
+		return nil, err
+	}
 
-// 	newUrl := fmt.Sprintf(constants.AllBulkTransferEndpoint, body.PageSize, body.PageNo)
-// 	res, err := d.request.Get(newUrl)
-// 	if err != nil {
-// 		return nil, err
-// 	}
+	newUrl := fmt.Sprintf(constants.AllBulkTransferEndpoint, body.PageSize, body.PageNo)
+	res, err := d.request.Get(newUrl)
+	if err != nil {
+		return nil, err
+	}
 
-// 	defer res.Body.Close()
+	defer res.Body.Close()
 
-// 	resBody, err := utils.ParseResponse[GetAllSingleTransferResponse](res.Body)
-// 	if err != nil {
-// 		return nil, err
-// 	}
+	resBody, err := utils.ParseResponse[GetAllBulkTransferResponse](res.Body)
+	if err != nil {
+		return nil, err
+	}
 
-// 	return resBody, nil
-// }
+	return resBody, nil
+}
