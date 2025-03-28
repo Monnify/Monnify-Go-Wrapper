@@ -32,6 +32,9 @@ const (
 	InitiateRefundEndpoint               = "/api/v1/refunds/initiate-refund"
 	GetAllRefundsEndpoint                = "/api/v1/refunds?page=%d&size=%d"
 	GetRefundStatusEndpoint              = "/api/v1/refunds/%s"
+	ValidateBankAccountEndpoint          = "/api/v1/disbursements/account/validate?accountNumber=%s&bankCode=%s"
+	VerifyBvnInformationEndpoint         = "/api/v1/disbursements/account/validate?accountNumber=%s&bankCode=%s"
+	MatchBvnAndAccountNameEndpoint       = "/api/v1/disbursements/account/validate?accountNumber=%s&bankCode=%s"
 
 	AuthentionKey = "authentication"
 )
