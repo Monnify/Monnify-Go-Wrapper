@@ -5,6 +5,7 @@ import (
 	"github.com/Monnify/Monnify-Go-Wrapper/src/common/request"
 	"github.com/Monnify/Monnify-Go-Wrapper/src/common/utils"
 	"github.com/Monnify/Monnify-Go-Wrapper/src/disbursement"
+	"github.com/Monnify/Monnify-Go-Wrapper/src/verification"
 )
 
 type Options struct {
@@ -19,6 +20,7 @@ type Monnify struct {
 	SubAccount      *collections.SubAccount
 	Transaction     *collections.Transaction
 	Refund          *disbursement.Refund
+	Verification    *verification.Verification
 }
 
 func New(options *Options) *Monnify {
@@ -31,5 +33,6 @@ func New(options *Options) *Monnify {
 		SubAccount:      collections.NewSubAccount(httpRequest),
 		Transaction:     collections.NewTransaction(httpRequest),
 		Refund:          disbursement.NewRefund(httpRequest),
+		Verification:    verification.NewVerification(httpRequest),
 	}
 }
