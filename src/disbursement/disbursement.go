@@ -2,6 +2,7 @@ package disbursement
 
 import (
 	"fmt"
+	mErr "github.com/Monnify/Monnify-Go-Wrapper/src/common/error"
 	"net/url"
 
 	"github.com/Monnify/Monnify-Go-Wrapper/src/common/constants"
@@ -17,7 +18,7 @@ func NewDisbursement(request *request.HttpRequest) *Disbursement {
 	return &Disbursement{request}
 }
 
-func (d *Disbursement) InitiateSingleTransfer(body SingleTransfer) (*SingleTransferResponse, error) {
+func (d *Disbursement) InitiateSingleTransfer(body SingleTransfer) (*SingleTransferResponse, *mErr.Error) {
 	if err := utils.ValidateStruct(body); err != nil {
 		return nil, err
 	}
@@ -39,7 +40,7 @@ func (d *Disbursement) InitiateSingleTransfer(body SingleTransfer) (*SingleTrans
 	return resBody, nil
 }
 
-func (d *Disbursement) InitiateBulkTransfer(body BulkTransfer) (*BulkTransferResponse, error) {
+func (d *Disbursement) InitiateBulkTransfer(body BulkTransfer) (*BulkTransferResponse, *mErr.Error) {
 	if err := utils.ValidateStruct(body); err != nil {
 		return nil, err
 	}
@@ -61,7 +62,7 @@ func (d *Disbursement) InitiateBulkTransfer(body BulkTransfer) (*BulkTransferRes
 	return resBody, nil
 }
 
-func (d *Disbursement) AuthorizeBulkTransfer(body AuthorizeTransfer) (*AuthorizeBulkTransferResponse, error) {
+func (d *Disbursement) AuthorizeBulkTransfer(body AuthorizeTransfer) (*AuthorizeBulkTransferResponse, *mErr.Error) {
 	if err := utils.ValidateStruct(body); err != nil {
 		return nil, err
 	}
@@ -81,7 +82,7 @@ func (d *Disbursement) AuthorizeBulkTransfer(body AuthorizeTransfer) (*Authorize
 	return resBody, nil
 }
 
-func (d *Disbursement) AuthorizeSingleTransfer(body AuthorizeTransfer) (*AuthorizeSingleTransferResponse, error) {
+func (d *Disbursement) AuthorizeSingleTransfer(body AuthorizeTransfer) (*AuthorizeSingleTransferResponse, *mErr.Error) {
 	if err := utils.ValidateStruct(body); err != nil {
 		return nil, err
 	}
@@ -101,7 +102,7 @@ func (d *Disbursement) AuthorizeSingleTransfer(body AuthorizeTransfer) (*Authori
 	return resBody, nil
 }
 
-func (d *Disbursement) ResendTransferOTP(body ResendTransferOTP) (*ResendTransferOTPResponse, error) {
+func (d *Disbursement) ResendTransferOTP(body ResendTransferOTP) (*ResendTransferOTPResponse, *mErr.Error) {
 	if err := utils.ValidateStruct(body); err != nil {
 		return nil, err
 	}
@@ -121,7 +122,7 @@ func (d *Disbursement) ResendTransferOTP(body ResendTransferOTP) (*ResendTransfe
 	return resBody, nil
 }
 
-func (d *Disbursement) GetSingleTransferStatus(body GetStatus) (*GetSingleTransferStatusResponse, error) {
+func (d *Disbursement) GetSingleTransferStatus(body GetStatus) (*GetSingleTransferStatusResponse, *mErr.Error) {
 	if err := utils.ValidateStruct(body); err != nil {
 		return nil, err
 	}
@@ -143,7 +144,7 @@ func (d *Disbursement) GetSingleTransferStatus(body GetStatus) (*GetSingleTransf
 	return resBody, nil
 }
 
-func (d *Disbursement) GetBulkTransferStatus(body GetBulkStatus) (*GetBulkTransferStatusResponse, error) {
+func (d *Disbursement) GetBulkTransferStatus(body GetBulkStatus) (*GetBulkTransferStatusResponse, *mErr.Error) {
 	if err := utils.ValidateStruct(body); err != nil {
 		return nil, err
 	}
@@ -164,7 +165,7 @@ func (d *Disbursement) GetBulkTransferStatus(body GetBulkStatus) (*GetBulkTransf
 	return resBody, nil
 }
 
-func (d *Disbursement) GetAllSingleTransfer(body GetAllSingleTransfer) (*GetAllSingleTransferResponse, error) {
+func (d *Disbursement) GetAllSingleTransfer(body GetAllSingleTransfer) (*GetAllSingleTransferResponse, *mErr.Error) {
 	if err := utils.ValidateStruct(body); err != nil {
 		return nil, err
 	}
@@ -185,7 +186,7 @@ func (d *Disbursement) GetAllSingleTransfer(body GetAllSingleTransfer) (*GetAllS
 	return resBody, nil
 }
 
-func (d *Disbursement) GetAllBulkTransfer(body GetAllBulkTransfer) (*GetAllBulkTransferResponse, error) {
+func (d *Disbursement) GetAllBulkTransfer(body GetAllBulkTransfer) (*GetAllBulkTransferResponse, *mErr.Error) {
 	if err := utils.ValidateStruct(body); err != nil {
 		return nil, err
 	}

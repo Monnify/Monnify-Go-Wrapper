@@ -3,6 +3,7 @@ package collections
 import (
 	"fmt"
 	"github.com/Monnify/Monnify-Go-Wrapper/src/common/constants"
+	mErr "github.com/Monnify/Monnify-Go-Wrapper/src/common/error"
 	"github.com/Monnify/Monnify-Go-Wrapper/src/common/request"
 	"github.com/Monnify/Monnify-Go-Wrapper/src/common/utils"
 )
@@ -15,7 +16,7 @@ func NewTransaction(request *request.HttpRequest) *Transaction {
 	return &Transaction{request}
 }
 
-func (t *Transaction) InitializeTransaction(body InitializeTransactionModel) (*InitializeTransactionResponse, error) {
+func (t *Transaction) InitializeTransaction(body InitializeTransactionModel) (*InitializeTransactionResponse, *mErr.Error) {
 	if err := utils.ValidateStruct(body); err != nil {
 		return nil, err
 	}
@@ -37,7 +38,7 @@ func (t *Transaction) InitializeTransaction(body InitializeTransactionModel) (*I
 	return resBody, nil
 }
 
-func (t *Transaction) GetTransactionStatusv2(body GetTransactionStatusv2Model) (*GetTransactionStatusv2Response, error) {
+func (t *Transaction) GetTransactionStatusv2(body GetTransactionStatusv2Model) (*GetTransactionStatusv2Response, *mErr.Error) {
 	if err := utils.ValidateStruct(body); err != nil {
 		return nil, err
 	}
@@ -58,7 +59,7 @@ func (t *Transaction) GetTransactionStatusv2(body GetTransactionStatusv2Model) (
 	return resBody, nil
 }
 
-func (t *Transaction) GetTransactionStatusv1(body GetTransactionStatusv1Model) (*GetTransactionStatusv1Response, error) {
+func (t *Transaction) GetTransactionStatusv1(body GetTransactionStatusv1Model) (*GetTransactionStatusv1Response, *mErr.Error) {
 	if err := utils.ValidateStruct(body); err != nil {
 		return nil, err
 	}
@@ -84,7 +85,7 @@ func (t *Transaction) GetTransactionStatusv1(body GetTransactionStatusv1Model) (
 //
 //}
 
-func (t *Transaction) PayWithBankTransfer(body PayWithBankTransferModel) (*PayWithBankTransferResponse, error) {
+func (t *Transaction) PayWithBankTransfer(body PayWithBankTransferModel) (*PayWithBankTransferResponse, *mErr.Error) {
 	if err := utils.ValidateStruct(body); err != nil {
 		return nil, err
 	}
@@ -104,7 +105,7 @@ func (t *Transaction) PayWithBankTransfer(body PayWithBankTransferModel) (*PayWi
 	return resBody, nil
 }
 
-func (t *Transaction) ChargeCard(body ChargeCardModel) (*ChargeCardResponse, error) {
+func (t *Transaction) ChargeCard(body ChargeCardModel) (*ChargeCardResponse, *mErr.Error) {
 	if err := utils.ValidateStruct(body); err != nil {
 		return nil, err
 	}
@@ -124,7 +125,7 @@ func (t *Transaction) ChargeCard(body ChargeCardModel) (*ChargeCardResponse, err
 	return resBody, nil
 }
 
-func (t *Transaction) AuthorizeOTP(body AuthorizeOTPModel) (*AuthorizeOTPResponse, error) {
+func (t *Transaction) AuthorizeOTP(body AuthorizeOTPModel) (*AuthorizeOTPResponse, *mErr.Error) {
 	if err := utils.ValidateStruct(body); err != nil {
 		return nil, err
 	}
@@ -144,7 +145,7 @@ func (t *Transaction) AuthorizeOTP(body AuthorizeOTPModel) (*AuthorizeOTPRespons
 	return resBody, nil
 }
 
-func (t *Transaction) ThreeDsSecureAuthTransaction(body ThreeDsSecureAuthTransactionModel) (*ThreeDsSecureAuthTransactionResponse, error) {
+func (t *Transaction) ThreeDsSecureAuthTransaction(body ThreeDsSecureAuthTransactionModel) (*ThreeDsSecureAuthTransactionResponse, *mErr.Error) {
 	if err := utils.ValidateStruct(body); err != nil {
 		return nil, err
 	}
@@ -164,7 +165,7 @@ func (t *Transaction) ThreeDsSecureAuthTransaction(body ThreeDsSecureAuthTransac
 	return resBody, nil
 }
 
-func (t *Transaction) CardTokenization(body CardTokenizationModel) (*CardTokenizationResponse, error) {
+func (t *Transaction) CardTokenization(body CardTokenizationModel) (*CardTokenizationResponse, *mErr.Error) {
 	if err := utils.ValidateStruct(body); err != nil {
 		return nil, err
 	}

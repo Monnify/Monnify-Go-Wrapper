@@ -13,16 +13,16 @@ type ReservedAccountSchema struct {
 	CustomerEmail         string                 `json:"customerEmail" validate:"required,email"`
 	AccountName           string                 `json:"accountName" validate:"required,min=3"`
 	AccountReference      string                 `json:"accountReference" validate:"required"`
-	CurrencyCode          string                 `json:"currencyCode" validate:"omitempty,oneof=NGN USD EUR"`
+	CurrencyCode          string                 `json:"currencyCode,omitempty" validate:"omitempty,oneof=NGN USD EUR"`
 	ContractCode          string                 `json:"contractCode" validate:"required"`
-	Bvn                   string                 `json:"bvn" validate:"omitempty,len=11,required_without=Nin"`
-	Nin                   string                 `json:"nin" validate:"omitempty,len=11"`
-	GetAllAvailableBanks  bool                   `json:"getAllAvailableBanks" validate:"omitempty"`
-	PreferredBanks        []string               `json:"preferredBanks" validate:"dive,required_if=GetAllAvailableBanks,false"`
-	IncomeSplitConfig     []IncomeSplit          `json:"incomeSplitConfig" validate:"omitempty"`
+	Bvn                   string                 `json:"bvn,omitempty" validate:"omitempty,len=11,required_without=Nin"`
+	Nin                   string                 `json:"nin,omitempty" validate:"omitempty,len=11"`
+	GetAllAvailableBanks  bool                   `json:"getAllAvailableBanks,omitempty" validate:"omitempty"`
+	PreferredBanks        []string               `json:"preferredBanks,omitempty" validate:"dive,required_if=GetAllAvailableBanks false"`
+	IncomeSplitConfig     []IncomeSplit          `json:"incomeSplitConfig,omitempty" validate:"omitempty"`
 	MetaData              map[string]interface{} `json:"metaData,omitempty"`
-	RestrictPaymentSource bool                   `json:"restrictPaymentSource" validate:"omitempty"`
-	AllowedPaymentSources map[string]interface{} `json:"allowedPaymentSources,omitempty" validate:"required_if=RestrictPaymentSource,true"`
+	RestrictPaymentSource bool                   `json:"restrictPaymentSource,omitempty" validate:"omitempty"`
+	AllowedPaymentSources map[string]interface{} `json:"allowedPaymentSources,omitempty" validate:"required_if=RestrictPaymentSource true"`
 }
 
 func (s *ReservedAccountSchema) SetDefault() {
@@ -58,7 +58,7 @@ type ReservedAccountResponse struct {
 type AddLinkedAccountSchema struct {
 	AccountReference     string   `json:"accountReference" validate:"required"`
 	GetAllAvailableBanks bool     `json:"getAllAvailableBanks" validate:"omitempty"`
-	PreferredBanks       []string `json:"preferredBanks" validate:"dive,required_if=GetAllAvailableBanks,false"`
+	PreferredBanks       []string `json:"preferredBanks" validate:"dive,required_if=GetAllAvailableBanks false"`
 }
 
 type AddLinkedAccountResponse struct {
