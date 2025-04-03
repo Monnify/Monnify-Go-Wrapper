@@ -28,6 +28,8 @@ func (r *ReservedAccount) CreateReservedAccount(body ReservedAccountSchema) (*Re
 		return nil, err
 	}
 
+	defer res.Body.Close()
+
 	resBody, err := utils.ParseResponse[ReservedAccountResponse](res.Body)
 	if err != nil {
 		return nil, err

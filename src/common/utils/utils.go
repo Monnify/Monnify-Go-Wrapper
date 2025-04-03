@@ -91,3 +91,21 @@ func GenerateRandomNumbers(n int) string {
 
 	return sb.String()
 }
+
+func GenerateRandomEmail() string {
+	letters := "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+	domains := []string{"gmail.com", "yahoo.com", "outlook.com", "example.com"}
+
+	src := rand.NewSource(time.Now().UnixNano())
+	r := rand.New(src)
+
+	usernameLength := r.Intn(7) + 6
+	var username strings.Builder
+	for i := 0; i < usernameLength; i++ {
+		username.WriteByte(letters[r.Intn(len(letters))])
+	}
+
+	domain := domains[r.Intn(len(domains))]
+	email := username.String() + "@" + domain
+	return email
+}

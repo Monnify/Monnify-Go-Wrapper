@@ -113,18 +113,18 @@ func (h *HttpRequest) Post(url string, body any) (*http.Response, *mErr.Error) {
 		return nil, mErr.ErrorHandler("error making http request", resError, nil)
 	}
 
-	defer res.Body.Close()
-
 	if res.StatusCode >= 200 && res.StatusCode < 300 {
 		return res, nil
 	}
+
+	defer res.Body.Close()
 
 	errResp, err := utils.ParseResponse[mErr.ErrResponse](res.Body)
 	if err != nil {
 		return nil, err
 	}
 
-	return nil, mErr.ErrorHandler("", nil, errResp)
+	return nil, mErr.ErrorHandler("API Response Error", nil, errResp)
 }
 
 func (h *HttpRequest) Get(url string) (*http.Response, *mErr.Error) {
@@ -150,18 +150,18 @@ func (h *HttpRequest) Get(url string) (*http.Response, *mErr.Error) {
 		return nil, mErr.ErrorHandler("error making http request", resError, nil)
 	}
 
-	defer res.Body.Close()
-
 	if res.StatusCode >= 200 && res.StatusCode < 300 {
 		return res, nil
 	}
+
+	defer res.Body.Close()
 
 	errResp, err := utils.ParseResponse[mErr.ErrResponse](res.Body)
 	if err != nil {
 		return nil, err
 	}
 
-	return nil, mErr.ErrorHandler("", nil, errResp)
+	return nil, mErr.ErrorHandler("API Response Error", nil, errResp)
 }
 
 func (h *HttpRequest) Put(url string, body any) (*http.Response, *mErr.Error) {
@@ -192,18 +192,18 @@ func (h *HttpRequest) Put(url string, body any) (*http.Response, *mErr.Error) {
 		return nil, mErr.ErrorHandler("error making http request", resError, nil)
 	}
 
-	defer res.Body.Close()
-
 	if res.StatusCode >= 200 && res.StatusCode < 300 {
 		return res, nil
 	}
+
+	defer res.Body.Close()
 
 	errResp, err := utils.ParseResponse[mErr.ErrResponse](res.Body)
 	if err != nil {
 		return nil, err
 	}
 
-	return nil, mErr.ErrorHandler("", nil, errResp)
+	return nil, mErr.ErrorHandler("API Response Error", nil, errResp)
 }
 
 func (h *HttpRequest) Delete(url string) (*http.Response, *mErr.Error) {
@@ -229,16 +229,16 @@ func (h *HttpRequest) Delete(url string) (*http.Response, *mErr.Error) {
 		return nil, mErr.ErrorHandler("error making http request", resError, nil)
 	}
 
-	defer res.Body.Close()
-
 	if res.StatusCode >= 200 && res.StatusCode < 300 {
 		return res, nil
 	}
+
+	defer res.Body.Close()
 
 	errResp, err := utils.ParseResponse[mErr.ErrResponse](res.Body)
 	if err != nil {
 		return nil, err
 	}
 
-	return nil, mErr.ErrorHandler("", nil, errResp)
+	return nil, mErr.ErrorHandler("API Response Error", nil, errResp)
 }
