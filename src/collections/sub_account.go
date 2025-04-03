@@ -2,6 +2,7 @@ package collections
 
 import (
 	"fmt"
+	mErr "github.com/Monnify/Monnify-Go-Wrapper/src/common/error"
 	"net/url"
 
 	"github.com/Monnify/Monnify-Go-Wrapper/src/common/constants"
@@ -17,7 +18,7 @@ func NewSubAccount(request *request.HttpRequest) *SubAccount {
 	return &SubAccount{request}
 }
 
-func (s *SubAccount) CreateSubAccount(body CreateSubAccountModel) (*CreateSubAccountResponse, error) {
+func (s *SubAccount) CreateSubAccount(body CreateSubAccountModel) (*CreateSubAccountResponse, *mErr.Error) {
 	if err := utils.ValidateStruct(body); err != nil {
 		return nil, err
 	}
@@ -37,7 +38,7 @@ func (s *SubAccount) CreateSubAccount(body CreateSubAccountModel) (*CreateSubAcc
 	return resBody, nil
 }
 
-func (s *SubAccount) DeleteSubAccount(body DeleteSubAccountModel) (*DeleteSubAccountResponse, error) {
+func (s *SubAccount) DeleteSubAccount(body DeleteSubAccountModel) (*DeleteSubAccountResponse, *mErr.Error) {
 	if err := utils.ValidateStruct(body); err != nil {
 		return nil, err
 	}
@@ -59,7 +60,7 @@ func (s *SubAccount) DeleteSubAccount(body DeleteSubAccountModel) (*DeleteSubAcc
 	return resBody, nil
 }
 
-func (s *SubAccount) GetSubAccounts() (*GetSubAccountsResponse, error) {
+func (s *SubAccount) GetSubAccounts() (*GetSubAccountsResponse, *mErr.Error) {
 	res, err := s.request.Get(constants.GetSubAccountEndpoint)
 	if err != nil {
 		return nil, err
@@ -75,7 +76,7 @@ func (s *SubAccount) GetSubAccounts() (*GetSubAccountsResponse, error) {
 	return resBody, nil
 }
 
-func (s *SubAccount) UpdateSubAccount(body UpdateSubAccountModel) (*UpdateSubAccountResponse, error) {
+func (s *SubAccount) UpdateSubAccount(body UpdateSubAccountModel) (*UpdateSubAccountResponse, *mErr.Error) {
 	if err := utils.ValidateStruct(body); err != nil {
 		return nil, err
 	}

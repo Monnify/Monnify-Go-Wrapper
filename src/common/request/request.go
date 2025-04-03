@@ -2,7 +2,7 @@ package request
 
 import (
 	"encoding/base64"
-	"errors"
+	mErr "github.com/Monnify/Monnify-Go-Wrapper/src/common/error"
 	"io"
 	"net/http"
 	"time"
@@ -32,11 +32,11 @@ func NewHttpRequest(baseUrl string, credentials string) *HttpRequest {
 	return &HttpRequest{baseUrl: baseUrl, cache: cache.NewCache(), credentials: credentials}
 }
 
-func (h *HttpRequest) generateToken() (string, error) {
+func (h *HttpRequest) generateToken() (string, *mErr.Error) {
 	base64Str := base64.StdEncoding.EncodeToString([]byte(h.credentials))
-	req, err := h.CreateRequest(http.MethodPost, constants.LoginEndpoint, nil)
-	if err != nil {
-		return "", err
+	req, reqErr := h.CreateRequest(http.MethodPost, constants.LoginEndpoint, nil)
+	if reqErr != nil {
+		return "", reqErr
 	}
 
 	req.Header.Set("Content-Type", "application/json")
@@ -46,23 +46,23 @@ func (h *HttpRequest) generateToken() (string, error) {
 		Timeout: 10 * time.Second,
 	}
 
-	res, err := client.Do(req)
-	if err != nil {
-		return "", errors.New("error making http request")
+	res, resErr := client.Do(req)
+	if resErr != nil {
+		return "", mErr.ErrorHandler("error making http request", resErr, nil)
 	}
 
 	defer res.Body.Close()
 
-	body, err := utils.ParseResponse[Login](res.Body)
-	if err != nil {
-		return "", err
+	body, parseErr := utils.ParseResponse[Login](res.Body)
+	if parseErr != nil {
+		return "", parseErr
 	}
 
 	h.cache.Set(constants.AuthentionKey, body.ResponseBody.AccessToken, body.ResponseBody.ExpiresIn*time.Second)
 	return body.ResponseBody.AccessToken, nil
 }
 
-func (h *HttpRequest) getToken() (string, error) {
+func (h *HttpRequest) getToken() (string, *mErr.Error) {
 	value, ok := h.cache.Get(constants.AuthentionKey)
 	if ok {
 		return "Bearer " + value, nil
@@ -76,16 +76,16 @@ func (h *HttpRequest) getToken() (string, error) {
 	return "Bearer " + token, nil
 }
 
-func (h *HttpRequest) CreateRequest(method, url string, body io.Reader) (*http.Request, error) {
+func (h *HttpRequest) CreateRequest(method, url string, body io.Reader) (*http.Request, *mErr.Error) {
 	req, err := http.NewRequest(method, h.baseUrl+url, body)
 	if err != nil {
-		return nil, errors.New("could not create request")
+		return nil, mErr.ErrorHandler("could not create request", err, nil)
 	}
 
 	return req, nil
 }
 
-func (h *HttpRequest) Post(url string, body any) (*http.Response, error) {
+func (h *HttpRequest) Post(url string, body any) (*http.Response, *mErr.Error) {
 	token, err := h.getToken()
 	if err != nil {
 		return nil, err
@@ -108,15 +108,26 @@ func (h *HttpRequest) Post(url string, body any) (*http.Response, error) {
 		Timeout: 10 * time.Second,
 	}
 
-	res, err := client.Do(req)
-	if err != nil {
-		return nil, errors.New("error making http request")
+	res, resError := client.Do(req)
+	if resError != nil {
+		return nil, mErr.ErrorHandler("error making http request", resError, nil)
 	}
 
-	return res, nil
+	defer res.Body.Close()
+
+	if res.StatusCode >= 200 && res.StatusCode < 300 {
+		return res, nil
+	}
+
+	errResp, err := utils.ParseResponse[mErr.ErrResponse](res.Body)
+	if err != nil {
+		return nil, err
+	}
+
+	return nil, mErr.ErrorHandler("", nil, errResp)
 }
 
-func (h *HttpRequest) Get(url string) (*http.Response, error) {
+func (h *HttpRequest) Get(url string) (*http.Response, *mErr.Error) {
 	token, err := h.getToken()
 	if err != nil {
 		return nil, err
@@ -134,15 +145,26 @@ func (h *HttpRequest) Get(url string) (*http.Response, error) {
 		Timeout: 10 * time.Second,
 	}
 
-	res, err := client.Do(req)
-	if err != nil {
-		return nil, errors.New("error making http request")
+	res, resError := client.Do(req)
+	if resError != nil {
+		return nil, mErr.ErrorHandler("error making http request", resError, nil)
 	}
 
-	return res, nil
+	defer res.Body.Close()
+
+	if res.StatusCode >= 200 && res.StatusCode < 300 {
+		return res, nil
+	}
+
+	errResp, err := utils.ParseResponse[mErr.ErrResponse](res.Body)
+	if err != nil {
+		return nil, err
+	}
+
+	return nil, mErr.ErrorHandler("", nil, errResp)
 }
 
-func (h *HttpRequest) Put(url string, body any) (*http.Response, error) {
+func (h *HttpRequest) Put(url string, body any) (*http.Response, *mErr.Error) {
 	token, err := h.getToken()
 	if err != nil {
 		return nil, err
@@ -165,15 +187,26 @@ func (h *HttpRequest) Put(url string, body any) (*http.Response, error) {
 		Timeout: 10 * time.Second,
 	}
 
-	res, err := client.Do(req)
-	if err != nil {
-		return nil, errors.New("error making http request")
+	res, resError := client.Do(req)
+	if resError != nil {
+		return nil, mErr.ErrorHandler("error making http request", resError, nil)
 	}
 
-	return res, nil
+	defer res.Body.Close()
+
+	if res.StatusCode >= 200 && res.StatusCode < 300 {
+		return res, nil
+	}
+
+	errResp, err := utils.ParseResponse[mErr.ErrResponse](res.Body)
+	if err != nil {
+		return nil, err
+	}
+
+	return nil, mErr.ErrorHandler("", nil, errResp)
 }
 
-func (h *HttpRequest) Delete(url string) (*http.Response, error) {
+func (h *HttpRequest) Delete(url string) (*http.Response, *mErr.Error) {
 	token, err := h.getToken()
 	if err != nil {
 		return nil, err
@@ -191,10 +224,21 @@ func (h *HttpRequest) Delete(url string) (*http.Response, error) {
 		Timeout: 10 * time.Second,
 	}
 
-	res, err := client.Do(req)
-	if err != nil {
-		return nil, errors.New("error making http request")
+	res, resError := client.Do(req)
+	if resError != nil {
+		return nil, mErr.ErrorHandler("error making http request", resError, nil)
 	}
 
-	return res, nil
+	defer res.Body.Close()
+
+	if res.StatusCode >= 200 && res.StatusCode < 300 {
+		return res, nil
+	}
+
+	errResp, err := utils.ParseResponse[mErr.ErrResponse](res.Body)
+	if err != nil {
+		return nil, err
+	}
+
+	return nil, mErr.ErrorHandler("", nil, errResp)
 }

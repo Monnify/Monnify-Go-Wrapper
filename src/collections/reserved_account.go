@@ -2,8 +2,8 @@ package collections
 
 import (
 	"fmt"
-
 	"github.com/Monnify/Monnify-Go-Wrapper/src/common/constants"
+	mErr "github.com/Monnify/Monnify-Go-Wrapper/src/common/error"
 	"github.com/Monnify/Monnify-Go-Wrapper/src/common/request"
 	"github.com/Monnify/Monnify-Go-Wrapper/src/common/utils"
 )
@@ -16,7 +16,7 @@ func NewReservedAccount(request *request.HttpRequest) *ReservedAccount {
 	return &ReservedAccount{request}
 }
 
-func (r *ReservedAccount) CreateReservedAccount(body ReservedAccountSchema) (*ReservedAccountResponse, error) {
+func (r *ReservedAccount) CreateReservedAccount(body ReservedAccountSchema) (*ReservedAccountResponse, *mErr.Error) {
 	if err := utils.ValidateStruct(body); err != nil {
 		return nil, err
 	}
@@ -28,8 +28,6 @@ func (r *ReservedAccount) CreateReservedAccount(body ReservedAccountSchema) (*Re
 		return nil, err
 	}
 
-	defer res.Body.Close()
-
 	resBody, err := utils.ParseResponse[ReservedAccountResponse](res.Body)
 	if err != nil {
 		return nil, err
@@ -38,7 +36,7 @@ func (r *ReservedAccount) CreateReservedAccount(body ReservedAccountSchema) (*Re
 	return resBody, nil
 }
 
-func (r *ReservedAccount) AddLinkedAccounts(body AddLinkedAccountSchema) (*AddLinkedAccountResponse, error) {
+func (r *ReservedAccount) AddLinkedAccounts(body AddLinkedAccountSchema) (*AddLinkedAccountResponse, *mErr.Error) {
 	if err := utils.ValidateStruct(body); err != nil {
 		return nil, err
 	}
@@ -59,7 +57,7 @@ func (r *ReservedAccount) AddLinkedAccounts(body AddLinkedAccountSchema) (*AddLi
 	return resBody, nil
 }
 
-func (r *ReservedAccount) ReservedAccountDetails(body ReservedAccountDetailsSchema) (*ReservedAccountDetailsResponse, error) {
+func (r *ReservedAccount) ReservedAccountDetails(body ReservedAccountDetailsSchema) (*ReservedAccountDetailsResponse, *mErr.Error) {
 	if err := utils.ValidateStruct(body); err != nil {
 		return nil, err
 	}
@@ -80,7 +78,7 @@ func (r *ReservedAccount) ReservedAccountDetails(body ReservedAccountDetailsSche
 	return resBody, nil
 }
 
-func (r *ReservedAccount) ReservedAccountTransactions(body ReservedAccountTransactionsSchema) (*ReservedAccountTransactionsResponse, error) {
+func (r *ReservedAccount) ReservedAccountTransactions(body ReservedAccountTransactionsSchema) (*ReservedAccountTransactionsResponse, *mErr.Error) {
 	if err := utils.ValidateStruct(body); err != nil {
 		return nil, err
 	}
@@ -102,7 +100,7 @@ func (r *ReservedAccount) ReservedAccountTransactions(body ReservedAccountTransa
 	return resBody, nil
 }
 
-func (r *ReservedAccount) DeallocateReservedAccount(body DeallocateReservedAccountSchema) (*DeallocateReservedAccountResponse, error) {
+func (r *ReservedAccount) DeallocateReservedAccount(body DeallocateReservedAccountSchema) (*DeallocateReservedAccountResponse, *mErr.Error) {
 	if err := utils.ValidateStruct(body); err != nil {
 		return nil, err
 	}
@@ -123,7 +121,7 @@ func (r *ReservedAccount) DeallocateReservedAccount(body DeallocateReservedAccou
 	return resBody, nil
 }
 
-func (r *ReservedAccount) UpdateReservedAccountKycInfo(body UpdateReservedAccountKycInfoSchema) (*UpdateReservedAccountKycInfoResponse, error) {
+func (r *ReservedAccount) UpdateReservedAccountKycInfo(body UpdateReservedAccountKycInfoSchema) (*UpdateReservedAccountKycInfoResponse, *mErr.Error) {
 	if err := utils.ValidateStruct(body); err != nil {
 		return nil, err
 	}
