@@ -19,8 +19,8 @@ type Config struct {
 	MonnifySecretKey string `mapstructure:"MONNIFY_SECRET_KEY"`
 }
 
-func LoadConfig() (config *Config) {
-	viper.AddConfigPath("../..")
+func LoadConfig(path string) (config *Config) {
+	viper.AddConfigPath(path)
 	viper.SetConfigName(".env")
 	viper.SetConfigType("env")
 
