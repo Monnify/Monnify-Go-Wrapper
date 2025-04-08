@@ -53,13 +53,22 @@ func (h *HttpRequest) generateToken() (string, *mErr.Error) {
 
 	defer res.Body.Close()
 
-	body, parseErr := utils.ParseResponse[Login](res.Body)
-	if parseErr != nil {
-		return "", parseErr
+	if res.StatusCode >= 200 && res.StatusCode < 300 {
+		body, parseErr := utils.ParseResponse[Login](res.Body)
+		if parseErr != nil {
+			return "", parseErr
+		}
+
+		h.cache.Set(constants.AuthentionKey, body.ResponseBody.AccessToken, body.ResponseBody.ExpiresIn*time.Second)
+		return body.ResponseBody.AccessToken, nil
 	}
 
-	h.cache.Set(constants.AuthentionKey, body.ResponseBody.AccessToken, body.ResponseBody.ExpiresIn*time.Second)
-	return body.ResponseBody.AccessToken, nil
+	errResp, err := utils.ParseResponse[mErr.ErrResponse](res.Body)
+	if err != nil {
+		return "", err
+	}
+
+	return "", mErr.ErrorHandler("API Response Error", nil, errResp)
 }
 
 func (h *HttpRequest) getToken() (string, *mErr.Error) {
