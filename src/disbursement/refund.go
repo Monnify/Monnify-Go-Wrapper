@@ -3,6 +3,7 @@ package disbursement
 import (
 	"fmt"
 	"github.com/Monnify/Monnify-Go-Wrapper/src/common/constants"
+	mErr "github.com/Monnify/Monnify-Go-Wrapper/src/common/error"
 	"github.com/Monnify/Monnify-Go-Wrapper/src/common/request"
 	"github.com/Monnify/Monnify-Go-Wrapper/src/common/utils"
 )
@@ -15,7 +16,7 @@ func NewRefund(request *request.HttpRequest) *Refund {
 	return &Refund{request}
 }
 
-func (r *Refund) InitiateRefund(body InitiateRefundModel) (*InitiateRefundResponse, error) {
+func (r *Refund) InitiateRefund(body InitiateRefundModel) (*InitiateRefundResponse, *mErr.Error) {
 	if err := utils.ValidateStruct(body); err != nil {
 		return nil, err
 	}
@@ -37,7 +38,7 @@ func (r *Refund) InitiateRefund(body InitiateRefundModel) (*InitiateRefundRespon
 	return resBody, nil
 }
 
-func (r *Refund) GetAllRefunds(body GetAllRefundsModel) (*GetAllRefundsResponse, error) {
+func (r *Refund) GetAllRefunds(body GetAllRefundsModel) (*GetAllRefundsResponse, *mErr.Error) {
 	if err := utils.ValidateStruct(body); err != nil {
 		return nil, err
 	}
@@ -58,7 +59,7 @@ func (r *Refund) GetAllRefunds(body GetAllRefundsModel) (*GetAllRefundsResponse,
 	return resBody, nil
 }
 
-func (r *Refund) GetRefundStatus(body GetRefundStatusModel) (*GetRefundStatusResponse, error) {
+func (r *Refund) GetRefundStatus(body GetRefundStatusModel) (*GetRefundStatusResponse, *mErr.Error) {
 	if err := utils.ValidateStruct(body); err != nil {
 		return nil, err
 	}
