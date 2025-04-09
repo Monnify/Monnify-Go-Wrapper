@@ -16,6 +16,16 @@ func getCredentials() string {
 	return credentials.MonnifyAPIKey + ":" + credentials.MonnifySecretKey
 }
 
+func getContractCode() string {
+	credentials := utils.LoadConfig("../..")
+	return credentials.ContractCode
+}
+
+func getApiKey() string {
+	credentials := utils.LoadConfig("../..")
+	return credentials.MonnifyAPIKey
+}
+
 func TestCreateReservedAccountFailed(t *testing.T) {
 	credentials := getCredentials()
 	httpRequest := request.NewHttpRequest(utils.GetBaseUrl(false), credentials)
@@ -68,7 +78,7 @@ func TestCreateReservedAccountSuccess(t *testing.T) {
 		CustomerEmail:        utils.GenerateRandomEmail(),
 		AccountName:          "John Doe",
 		AccountReference:     accRef,
-		ContractCode:         "0165673622",
+		ContractCode:         getContractCode(),
 		Bvn:                  utils.GenerateRandomNumbers(11),
 		GetAllAvailableBanks: true,
 		//PreferredBanks:        []string{""},
