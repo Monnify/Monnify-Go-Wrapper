@@ -17,6 +17,7 @@ import (
 type Config struct {
 	MonnifyAPIKey    string `mapstructure:"MONNIFY_API_KEY"`
 	MonnifySecretKey string `mapstructure:"MONNIFY_SECRET_KEY"`
+	ContractCode     string `mapstructure:"CONTRACT_CODE"`
 }
 
 func LoadConfig(path string) (config *Config) {
