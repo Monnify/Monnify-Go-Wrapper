@@ -3,6 +3,7 @@ package verification
 import (
 	"fmt"
 	"github.com/Monnify/Monnify-Go-Wrapper/src/common/constants"
+	mErr "github.com/Monnify/Monnify-Go-Wrapper/src/common/error"
 	"github.com/Monnify/Monnify-Go-Wrapper/src/common/request"
 	"github.com/Monnify/Monnify-Go-Wrapper/src/common/utils"
 )
@@ -15,7 +16,7 @@ func NewVerification(request *request.HttpRequest) *Verification {
 	return &Verification{request}
 }
 
-func (v *Verification) ValidateBankAccount(body ValidateBankAccountModel) (*ValidateBankAccountResponse, error) {
+func (v *Verification) ValidateBankAccount(body ValidateBankAccountModel) (*ValidateBankAccountResponse, *mErr.Error) {
 	if err := utils.ValidateStruct(body); err != nil {
 		return nil, err
 	}
@@ -36,7 +37,7 @@ func (v *Verification) ValidateBankAccount(body ValidateBankAccountModel) (*Vali
 	return resBody, nil
 }
 
-func (v *Verification) VerifyBvnInformation(body VerifyBvnInformationModel) (*VerifyBvnInformationResponse, error) {
+func (v *Verification) VerifyBvnInformation(body VerifyBvnInformationModel) (*VerifyBvnInformationResponse, *mErr.Error) {
 	if err := utils.ValidateStruct(body); err != nil {
 		return nil, err
 	}
@@ -56,7 +57,7 @@ func (v *Verification) VerifyBvnInformation(body VerifyBvnInformationModel) (*Ve
 	return resBody, nil
 }
 
-func (v *Verification) MatchBvnAndAccountName(body MatchBvnAndAccountNameModel) (*MatchBvnAndAccountNameResponse, error) {
+func (v *Verification) MatchBvnAndAccountName(body MatchBvnAndAccountNameModel) (*MatchBvnAndAccountNameResponse, *mErr.Error) {
 	if err := utils.ValidateStruct(body); err != nil {
 		return nil, err
 	}

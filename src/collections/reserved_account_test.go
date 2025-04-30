@@ -11,11 +11,41 @@ import (
 
 var accRef string
 
+func getCredentials() string {
+	credentials := utils.LoadConfig("../..")
+	return credentials.MonnifyAPIKey + ":" + credentials.MonnifySecretKey
+}
+
+func getContractCode() string {
+	credentials := utils.LoadConfig("../..")
+	return credentials.ContractCode
+}
+
+func getApiKey() string {
+	credentials := utils.LoadConfig("../..")
+	return credentials.MonnifyAPIKey
+}
+
 func TestCreateReservedAccountFailed(t *testing.T) {
-	credentials := utils.LoadConfig()
-	httpRequest := request.NewHttpRequest(utils.GetBaseUrl(false), credentials.MonnifyAPIKey+":"+credentials.MonnifySecretKey)
+	credentials := getCredentials()
+	httpRequest := request.NewHttpRequest(utils.GetBaseUrl(false), credentials)
 	reservedAccount := NewReservedAccount(httpRequest)
 
+	// TEST Validation
+	invalidBody := ReservedAccountSchema{
+		CustomerName:     "",
+		CustomerEmail:    "",
+		AccountName:      "",
+		AccountReference: "",
+		CurrencyCode:     "",
+		ContractCode:     "",
+		Bvn:              "",
+	}
+	_, vErr := reservedAccount.CreateReservedAccount(invalidBody)
+	assert.NotNil(t, vErr)
+	assert.Equal(t, "Validation Error", vErr.Message)
+
+	// Test Response
 	body := ReservedAccountSchema{
 		CustomerName:         "John Doe",
 		CustomerEmail:        "johndoe@example.com",
@@ -38,21 +68,19 @@ func TestCreateReservedAccountFailed(t *testing.T) {
 }
 
 func TestCreateReservedAccountSuccess(t *testing.T) {
-	credentials := utils.LoadConfig()
-	httpRequest := request.NewHttpRequest(utils.GetBaseUrl(false), credentials.MonnifyAPIKey+":"+credentials.MonnifySecretKey)
+	credentials := getCredentials()
+	httpRequest := request.NewHttpRequest(utils.GetBaseUrl(false), credentials)
 	reservedAccount := NewReservedAccount(httpRequest)
 
 	accRef = uuid.New().String()
 	body := ReservedAccountSchema{
-		CustomerName:         "John Doe",
-		CustomerEmail:        utils.GenerateRandomEmail(),
-		AccountName:          "John Doe",
-		AccountReference:     accRef,
-		CurrencyCode:         "NGN",
-		ContractCode:         "0165673622",
-		Bvn:                  utils.GenerateRandomNumbers(11),
-		GetAllAvailableBanks: true,
-		//PreferredBanks:        []string{""},
+		CustomerName:          "John Doe",
+		CustomerEmail:         utils.GenerateRandomEmail(),
+		AccountName:           "John Doe",
+		AccountReference:      accRef,
+		ContractCode:          getContractCode(),
+		Bvn:                   utils.GenerateRandomNumbers(11),
+		GetAllAvailableBanks:  true,
 		IncomeSplitConfig:     []IncomeSplit{},
 		MetaData:              nil,
 		RestrictPaymentSource: false,
@@ -92,9 +120,17 @@ func TestCreateReservedAccountSuccess(t *testing.T) {
 }
 
 func TestAddLinkedAccountsFailed(t *testing.T) {
-	credentials := utils.LoadConfig()
-	httpRequest := request.NewHttpRequest(utils.GetBaseUrl(false), credentials.MonnifyAPIKey+":"+credentials.MonnifySecretKey)
+	credentials := getCredentials()
+	httpRequest := request.NewHttpRequest(utils.GetBaseUrl(false), credentials)
 	reservedAccount := NewReservedAccount(httpRequest)
+
+	invalidBody := AddLinkedAccountSchema{
+		AccountReference: "",
+	}
+
+	_, vErr := reservedAccount.AddLinkedAccounts(invalidBody)
+	assert.NotNil(t, vErr)
+	assert.Equal(t, "Validation Error", vErr.Message)
 
 	body := AddLinkedAccountSchema{
 		AccountReference:     "98789789hsdjkhk",
@@ -108,8 +144,8 @@ func TestAddLinkedAccountsFailed(t *testing.T) {
 }
 
 func TestAddLinkedAccountsSuccess(t *testing.T) {
-	credentials := utils.LoadConfig()
-	httpRequest := request.NewHttpRequest(utils.GetBaseUrl(false), credentials.MonnifyAPIKey+":"+credentials.MonnifySecretKey)
+	credentials := getCredentials()
+	httpRequest := request.NewHttpRequest(utils.GetBaseUrl(false), credentials)
 	reservedAccount := NewReservedAccount(httpRequest)
 
 	body := AddLinkedAccountSchema{
@@ -157,9 +193,17 @@ func TestAddLinkedAccountsSuccess(t *testing.T) {
 }
 
 func TestReservedAccountDetailsFailed(t *testing.T) {
-	credentials := utils.LoadConfig()
-	httpRequest := request.NewHttpRequest(utils.GetBaseUrl(false), credentials.MonnifyAPIKey+":"+credentials.MonnifySecretKey)
+	credentials := getCredentials()
+	httpRequest := request.NewHttpRequest(utils.GetBaseUrl(false), credentials)
 	reservedAccount := NewReservedAccount(httpRequest)
+
+	invalidBody := ReservedAccountDetailsSchema{
+		AccountReference: "",
+	}
+
+	_, vErr := reservedAccount.ReservedAccountDetails(invalidBody)
+	assert.NotNil(t, vErr)
+	assert.Equal(t, "Validation Error", vErr.Message)
 
 	_, err := reservedAccount.ReservedAccountDetails(ReservedAccountDetailsSchema{
 		AccountReference: "98789789hsdjkhk",
@@ -169,8 +213,8 @@ func TestReservedAccountDetailsFailed(t *testing.T) {
 }
 
 func TestReservedAccountDetailsSuccess(t *testing.T) {
-	credentials := utils.LoadConfig()
-	httpRequest := request.NewHttpRequest(utils.GetBaseUrl(false), credentials.MonnifyAPIKey+":"+credentials.MonnifySecretKey)
+	credentials := getCredentials()
+	httpRequest := request.NewHttpRequest(utils.GetBaseUrl(false), credentials)
 	reservedAccount := NewReservedAccount(httpRequest)
 
 	body := ReservedAccountDetailsSchema{
@@ -218,9 +262,17 @@ func TestReservedAccountDetailsSuccess(t *testing.T) {
 }
 
 func TestReservedAccountTransactionsFailed(t *testing.T) {
-	credentials := utils.LoadConfig()
-	httpRequest := request.NewHttpRequest(utils.GetBaseUrl(false), credentials.MonnifyAPIKey+":"+credentials.MonnifySecretKey)
+	credentials := getCredentials()
+	httpRequest := request.NewHttpRequest(utils.GetBaseUrl(false), credentials)
 	reservedAccount := NewReservedAccount(httpRequest)
+
+	invalidBody := ReservedAccountTransactionsSchema{
+		AccountReference: "",
+	}
+
+	_, vErr := reservedAccount.ReservedAccountTransactions(invalidBody)
+	assert.NotNil(t, vErr)
+	assert.Equal(t, "Validation Error", vErr.Message)
 
 	_, err := reservedAccount.ReservedAccountTransactions(ReservedAccountTransactionsSchema{
 		AccountReference: "98789789hsdjkhk",
@@ -230,8 +282,8 @@ func TestReservedAccountTransactionsFailed(t *testing.T) {
 }
 
 func TestReservedAccountTransactionsSuccess(t *testing.T) {
-	credentials := utils.LoadConfig()
-	httpRequest := request.NewHttpRequest(utils.GetBaseUrl(false), credentials.MonnifyAPIKey+":"+credentials.MonnifySecretKey)
+	credentials := getCredentials()
+	httpRequest := request.NewHttpRequest(utils.GetBaseUrl(false), credentials)
 	reservedAccount := NewReservedAccount(httpRequest)
 
 	resp, _ := reservedAccount.ReservedAccountTransactions(ReservedAccountTransactionsSchema{
@@ -263,9 +315,17 @@ func TestReservedAccountTransactionsSuccess(t *testing.T) {
 }
 
 func TestUpdateReservedAccountKycInfoFailed(t *testing.T) {
-	credentials := utils.LoadConfig()
-	httpRequest := request.NewHttpRequest(utils.GetBaseUrl(false), credentials.MonnifyAPIKey+":"+credentials.MonnifySecretKey)
+	credentials := getCredentials()
+	httpRequest := request.NewHttpRequest(utils.GetBaseUrl(false), credentials)
 	reservedAccount := NewReservedAccount(httpRequest)
+
+	invalidBody := UpdateReservedAccountKycInfoSchema{
+		AccountReference: "",
+	}
+
+	_, vErr := reservedAccount.UpdateReservedAccountKycInfo(invalidBody)
+	assert.NotNil(t, vErr)
+	assert.Equal(t, "Validation Error", vErr.Message)
 
 	_, err := reservedAccount.UpdateReservedAccountKycInfo(UpdateReservedAccountKycInfoSchema{
 		AccountReference: "98789789hsdjkhk",
@@ -276,8 +336,8 @@ func TestUpdateReservedAccountKycInfoFailed(t *testing.T) {
 
 // TODO: commented out because require valid BVN to run test
 //func TestUpdateReservedAccountKycInfoSuccess(t *testing.T) {
-//	credentials := utils.LoadConfig()
-//	httpRequest := request.NewHttpRequest(utils.GetBaseUrl(false), credentials.MonnifyAPIKey+":"+credentials.MonnifySecretKey)
+//	credentials := getCredentials()
+//	httpRequest := request.NewHttpRequest(utils.GetBaseUrl(false), credentials)
 //	reservedAccount := NewReservedAccount(httpRequest)
 //
 //	resp, _ := reservedAccount.UpdateReservedAccountKycInfo(UpdateReservedAccountKycInfoSchema{
@@ -296,9 +356,17 @@ func TestUpdateReservedAccountKycInfoFailed(t *testing.T) {
 //}
 
 func TestDeallocateReservedAccountFailed(t *testing.T) {
-	credentials := utils.LoadConfig()
-	httpRequest := request.NewHttpRequest(utils.GetBaseUrl(false), credentials.MonnifyAPIKey+":"+credentials.MonnifySecretKey)
+	credentials := getCredentials()
+	httpRequest := request.NewHttpRequest(utils.GetBaseUrl(false), credentials)
 	reservedAccount := NewReservedAccount(httpRequest)
+
+	invalidBody := DeallocateReservedAccountSchema{
+		AccountReference: "",
+	}
+
+	_, vErr := reservedAccount.DeallocateReservedAccount(invalidBody)
+	assert.NotNil(t, vErr)
+	assert.Equal(t, "Validation Error", vErr.Message)
 
 	_, err := reservedAccount.DeallocateReservedAccount(DeallocateReservedAccountSchema{
 		AccountReference: "98789789hsdjkhk",
@@ -308,8 +376,8 @@ func TestDeallocateReservedAccountFailed(t *testing.T) {
 }
 
 func TestDeallocateReservedAccountSuccess(t *testing.T) {
-	credentials := utils.LoadConfig()
-	httpRequest := request.NewHttpRequest(utils.GetBaseUrl(false), credentials.MonnifyAPIKey+":"+credentials.MonnifySecretKey)
+	credentials := getCredentials()
+	httpRequest := request.NewHttpRequest(utils.GetBaseUrl(false), credentials)
 	reservedAccount := NewReservedAccount(httpRequest)
 
 	resp, _ := reservedAccount.DeallocateReservedAccount(DeallocateReservedAccountSchema{
