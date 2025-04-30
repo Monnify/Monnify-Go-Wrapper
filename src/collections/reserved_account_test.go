@@ -74,14 +74,13 @@ func TestCreateReservedAccountSuccess(t *testing.T) {
 
 	accRef = uuid.New().String()
 	body := ReservedAccountSchema{
-		CustomerName:         "John Doe",
-		CustomerEmail:        utils.GenerateRandomEmail(),
-		AccountName:          "John Doe",
-		AccountReference:     accRef,
-		ContractCode:         getContractCode(),
-		Bvn:                  utils.GenerateRandomNumbers(11),
-		GetAllAvailableBanks: true,
-		//PreferredBanks:        []string{""},
+		CustomerName:          "John Doe",
+		CustomerEmail:         utils.GenerateRandomEmail(),
+		AccountName:           "John Doe",
+		AccountReference:      accRef,
+		ContractCode:          getContractCode(),
+		Bvn:                   utils.GenerateRandomNumbers(11),
+		GetAllAvailableBanks:  true,
 		IncomeSplitConfig:     []IncomeSplit{},
 		MetaData:              nil,
 		RestrictPaymentSource: false,

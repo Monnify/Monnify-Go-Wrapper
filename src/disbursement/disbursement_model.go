@@ -6,13 +6,13 @@ type SingleTransfer struct {
 	Narration                string  `validate:"required,min=3" json:"narration"`
 	DestinationBankCode      string  `validate:"required,number,min=3" json:"destinationBankCode"`
 	DestinationAccountNumber string  `validate:"required,number,len=10" json:"destinationAccountNumber"`
-	CurrencyCode             string  `validate:"omitempty,oneof=NGN USD EUR" json:"currencyCode"`
+	Currency                 string  `validate:"omitempty,oneof=NGN USD EUR" json:"currency"`
 	SourceAccountNumber      string  `validate:"required,number,len=10" json:"sourceAccountNumber"`
 }
 
 func (s *SingleTransfer) SetDefault() {
-	if s.CurrencyCode == "" {
-		s.CurrencyCode = "NGN"
+	if s.Currency == "" {
+		s.Currency = "NGN"
 	}
 }
 
@@ -21,32 +21,32 @@ type SingleTransferResponse struct {
 	ResponseMessage   string `json:"responseMessage"`
 	ResponseCode      string `json:"responseCode"`
 	ResponseBody      struct {
-		Amount                   int    `json:"amount"`
-		Reference                string `json:"reference"`
-		Status                   string `json:"status"`
-		DateCreated              string `json:"dateCreated"`
-		TotalFee                 int    `json:"totalFee"`
-		DestinationAccountName   string `json:"destinationAccountName"`
-		DestinationBankName      string `json:"destinationBankName"`
-		DestinationAccountNumber string `json:"destinationAccountNumber"`
-		DestinationBankCode      string `json:"destinationBankCode"`
+		Amount                   float64 `json:"amount"`
+		Reference                string  `json:"reference"`
+		Status                   string  `json:"status"`
+		DateCreated              string  `json:"dateCreated"`
+		TotalFee                 float64 `json:"totalFee"`
+		DestinationAccountName   string  `json:"destinationAccountName"`
+		DestinationBankName      string  `json:"destinationBankName"`
+		DestinationAccountNumber string  `json:"destinationAccountNumber"`
+		DestinationBankCode      string  `json:"destinationBankCode"`
 	} `json:"responseBody"`
 }
 
 type bulkTransferTransactionList struct {
 	Narration                string  `validate:"required,min=3" json:"narration"`
-	DestinationAccountNumber string  `validate:"number,len=10" json:"destinationAccountNumber"`
+	DestinationAccountNumber string  `validate:"required,number,len=10" json:"destinationAccountNumber"`
 	Amount                   float64 `validate:"required,number,min=20" json:"amount"`
 	DestinationBankCode      string  `validate:"required,number,min=3" json:"destinationBankCode"`
 	Reference                string  `validate:"required" json:"reference"`
-	CurrencyCode             string  `validate:"omitempty,oneof=NGN" json:"currencyCode"`
+	Currency                 string  `validate:"omitempty,oneof=NGN" json:"currency"`
 }
 
 type BulkTransfer struct {
 	Title                string                        `validate:"required,min=5" json:"title"`
 	BatchReference       string                        `validate:"required" json:"batchReference"`
-	OnValidationFailure  string                        `validate:"omitempty,oneof=BREAK CONTINUE" json:"onValidationFailure"`
-	NotificationInterval int                           `validate:"number,min=10" json:"notificationInterval"`
+	OnValidationFailure  string                        `validate:"required,oneof=BREAK CONTINUE" json:"onValidationFailure"`
+	NotificationInterval int                           `validate:"required,number,oneof=25 50 75 100" json:"notificationInterval"`
 	Narration            string                        `validate:"required,min=3" json:"narration"`
 	SourceAccountNumber  string                        `validate:"number,len=10" json:"sourceAccountNumber"`
 	TransactionList      []bulkTransferTransactionList `validate:"required" json:"transactionList"`
@@ -62,8 +62,8 @@ func (b *BulkTransfer) SetDefault() {
 	}
 
 	for i := range b.TransactionList {
-		if b.TransactionList[i].CurrencyCode == "" {
-			b.TransactionList[i].CurrencyCode = "NGN"
+		if b.TransactionList[i].Currency == "" {
+			b.TransactionList[i].Currency = "NGN"
 		}
 	}
 }
@@ -73,12 +73,12 @@ type BulkTransferResponse struct {
 	ResponseMessage   string `json:"responseMessage"`
 	ResponseCode      string `json:"responseCode"`
 	ResponseBody      struct {
-		TotalAmount            int    `json:"totalAmount"`
-		TotalFee               int    `json:"totalFee"`
-		BatchReference         string `json:"batchReference"`
-		BatchStatus            string `json:"batchStatus"`
-		TotalTransactionsCount int    `json:"totalTransactionsCount"`
-		DateCreated            string `json:"dateCreated"`
+		TotalAmount            float64 `json:"totalAmount"`
+		TotalFee               float64 `json:"totalFee"`
+		BatchReference         string  `json:"batchReference"`
+		BatchStatus            string  `json:"batchStatus"`
+		TotalTransactionsCount int     `json:"totalTransactionsCount"`
+		DateCreated            string  `json:"dateCreated"`
 	} `json:"responseBody"`
 }
 
