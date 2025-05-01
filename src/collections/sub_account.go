@@ -18,9 +18,11 @@ func NewSubAccount(request *request.HttpRequest) *SubAccount {
 	return &SubAccount{request}
 }
 
-func (s *SubAccount) CreateSubAccount(body CreateSubAccountModel) (*CreateSubAccountResponse, *mErr.Error) {
-	if err := utils.ValidateStruct(body); err != nil {
-		return nil, err
+func (s *SubAccount) CreateSubAccount(body []CreateSubAccountModel) (*CreateSubAccountResponse, *mErr.Error) {
+	for _, bod := range body {
+		if err := utils.ValidateStruct(bod); err != nil {
+			return nil, err
+		}
 	}
 
 	res, err := s.request.Post(constants.CreateSubAccountEndpoint, body)

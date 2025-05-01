@@ -2,8 +2,8 @@ package collections
 
 type CreateSubAccountModel struct {
 	CurrencyCode           string  `json:"currencyCode" validate:"omitempty,oneof=NGN USD EUR"`
-	AccountNumber          int     `json:"accountNumber" validate:"required,len=10"`
-	BankCode               int     `json:"bankCode" validate:"required,min=3"`
+	AccountNumber          string  `json:"accountNumber" validate:"required,number,len=10"`
+	BankCode               string  `json:"bankCode" validate:"required,number,min=3"`
 	DefaultSplitPercentage float64 `json:"defaultSplitPercentage" validate:"required,min=0"`
 	Email                  string  `json:"email" validate:"required,email"`
 }
@@ -47,8 +47,8 @@ type GetSubAccountsResponse struct {
 
 type UpdateSubAccountModel struct {
 	CurrencyCode           string  `json:"currencyCode" validate:"omitempty,oneof=NGN USD EUR"`
-	AccountNumber          int     `json:"accountNumber" validate:"required,len=10"`
-	BankCode               int     `json:"bankCode" validate:"required,min=3"`
+	AccountNumber          string  `json:"accountNumber" validate:"required,number,len=10"`
+	BankCode               string  `json:"bankCode" validate:"required,number,min=3"`
 	DefaultSplitPercentage float64 `json:"defaultSplitPercentage" validate:"required,min=0"`
 	Email                  string  `json:"email" validate:"required,email"`
 	SubAccountCode         string  `json:"subAccountCode" validate:"required"`

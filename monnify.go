@@ -14,7 +14,7 @@ type Options struct {
 	IsProduction bool
 }
 
-type Monnify struct {
+type monnify struct {
 	Disbursement    *disbursement.Disbursement
 	ReservedAccount *collections.ReservedAccount
 	SubAccount      *collections.SubAccount
@@ -23,11 +23,11 @@ type Monnify struct {
 	Verification    *verification.Verification
 }
 
-func New(options *Options) *Monnify {
+func New(options *Options) *monnify {
 	baseUrl := utils.GetBaseUrl(options.IsProduction)
 	httpRequest := request.NewHttpRequest(baseUrl, options.ApiKey+":"+options.SecretKey)
 
-	return &Monnify{
+	return &monnify{
 		Disbursement:    disbursement.NewDisbursement(httpRequest),
 		ReservedAccount: collections.NewReservedAccount(httpRequest),
 		SubAccount:      collections.NewSubAccount(httpRequest),
