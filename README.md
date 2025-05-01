@@ -32,7 +32,7 @@ resp, err := monnifyPayment.Transaction.InitializeTransaction(
   collections.InitializeTransactionModel{
     CustomerEmail:      "example@gmail.com",
     CustomerName:       "John Doe",
-    Amount:             20.87,
+    Amount:             20.0,
     PaymentReference:   "payment reference",
     PaymentDescription: "description",
     ContractCode:       "contract code",
